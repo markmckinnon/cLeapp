@@ -21,6 +21,8 @@ from scripts.artifacts.chromeTopSites import get_chromeTopSites
 from scripts.artifacts.chromeWebsearch import get_chromeWebsearch
 from scripts.artifacts.recentactivity import get_recentactivity
 
+from scripts.artifacts.reminders_takeout import get_reminders_takeout
+
 from scripts.cleapfuncs import *
 
 # GREP searches for each module
@@ -30,7 +32,11 @@ from scripts.cleapfuncs import *
 # For example: If modulename='profit', function name must be get_profit(..)
 # Don't forget to import the module above!!!!
 
-tosearch = {
+tosearch_takeout = {
+    'reminders_takeout': ('Reminders', '**/Reminders/Reminders.html', '**/DSCN22*'),
+}
+
+tosearch_cLeapp = {
 # Accounts
     'accounts_ce': ('Accounts', '**/system_ce/*/accounts_ce.db'),
 #    'accounts_ce_authtokens':('Accounts', '**/accounts_ce.db'),
@@ -48,6 +54,9 @@ tosearch = {
 # Recent Activity
     'recentactivity':('Recent Activity', '*/system_ce/*'),
 }
+
+tosearch = dict(tosearch_cLeapp)
+tosearch.update(tosearch_takeout)
 
 slash = '\\' if is_platform_windows() else '/'
 
