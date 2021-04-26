@@ -88,7 +88,7 @@ def crunch_artifacts(search_list, extracttype, input_path, out_params, ratio, wr
     logfunc(f'CLEAPP v{cleapp_version}: Chrome Logs, Events, and Protobuf Parser')
     logfunc('Objective: Triage Chrome Image Extractions.')
     logfunc('By: Mark McKinnon | @markmckinnon')
-    logfunc('By: Alexis Brignoni | @AlexisBrignoni ')
+    logfunc('By: Alexis Brignoni | @AlexisBrignoni | abrignoni.com ')
     logfunc('By: Yogesh Khatri | @SwiftForensics | swiftforensics.com')
     logdevinfo()
     
