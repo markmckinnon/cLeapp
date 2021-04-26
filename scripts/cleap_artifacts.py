@@ -20,6 +20,7 @@ from scripts.artifacts.chromeSearchTerms import get_chromeSearchTerms
 from scripts.artifacts.chromeTopSites import get_chromeTopSites
 from scripts.artifacts.chromeWebsearch import get_chromeWebsearch
 from scripts.artifacts.recentactivity import get_recentactivity
+from scripts.artifacts.vpd import get_vpd
 
 from scripts.cleapfuncs import *
 
@@ -43,10 +44,12 @@ tosearch = {
 #    'chromeAutofill':('Browser', ('**/mount/user/Web Data*', '**/chronos/LockScreenAppsProfile/Web Data*', '**/chronos/Default/Web Data*')),
     'chromeSearchTerms':('Browser', ('**/mount/user/History*', '**/chronos/LockScreenAppsProfile/History*', '**/chronos/Default/History*')),
     'chromeWebsearch':('Browser', ('**/mount/user/History*', '**/chronos/LockScreenAppsProfile/History*', '**/chronos/Default/History*')),
-##    'chromium_bookmarks':('Browser', '**/mount/user/Bookmarks'),
+#   'chromium_bookmarks':('Browser', '**/mount/user/Bookmarks'),
     'chromeTopSites':('Browser', ('**/mount/user/Top Sites*', '**/chronos/LockScreenAppsProfile/Top Sites*', '**/chronos/Default/Top Sites*')),
 # Recent Activity
     'recentactivity':('Recent Activity', '*/system_ce/*'),
+# Vital Product Data
+    'vpd':('Vital Product Data', '*/vpd/full-v2.txt'),
 }
 
 slash = '\\' if is_platform_windows() else '/'

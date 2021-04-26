@@ -1,4 +1,5 @@
 import argparse
+import io
 import os
 import scripts.report as report
 import shutil
@@ -81,14 +82,16 @@ def main():
 def crunch_artifacts(search_list, extracttype, input_path, out_params, ratio, wrap_text):
     start = process_time()
 
-    logfunc('Procesing started. Please wait. This may take a few minutes...')
+    logfunc('Processing started. Please wait. This may take a few minutes...')
 
     logfunc('\n--------------------------------------------------------------------------------------')
     logfunc(f'CLEAPP v{cleapp_version}: Chrome Logs, Events, and Protobuf Parser')
     logfunc('Objective: Triage Chrome Image Extractions.')
     logfunc('By: Mark McKinnon | @markmckinnon')
     logfunc('  : Alexis Brignoni | @AlexisBrignoni ')
-
+    logfunc('  : Yogesh Khatri | @SwiftForensics | swiftforensics.com')
+    logdevinfo()
+    
     seeker = None
     try:
         if extracttype == 'fs':
