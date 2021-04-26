@@ -27,7 +27,6 @@ def get_icon_name(category, artifact):
     elif category == 'BASH HISTORY':    icon = 'terminal'
     elif category == 'BROWSER':    icon = 'chrome'
     elif category == 'BATTERY':         icon = 'battery-charging'
-    elif category == 'VITAL PRODUCT DATA':         icon = 'settings'
     elif category == 'CAST':            icon = 'cast'
     elif category == 'CALL LOGS':       icon = 'phone'
     elif category == 'CHATS':           icon = 'message-circle'
@@ -49,6 +48,7 @@ def get_icon_name(category, artifact):
     elif category == 'ETC HOSTS':       icon = 'globe'
     elif category == 'EMULATED STORAGE METADATA':     icon = 'database'
     elif category == 'FACEBOOK MESSENGER':      icon = 'facebook'
+    elif category == 'FILE SYSTEM DATA':         icon = 'settings'
     elif category == 'GBOARD KEYBOARD': icon = 'edit-3'
     elif category == 'GOOGLE DOCS':     icon = 'file'
     elif category == 'GOOGLE NOW & QUICKSEARCH': icon = 'search'
@@ -78,6 +78,7 @@ def get_icon_name(category, artifact):
     elif category == 'TIKTOK':
         if artifact == 'MESSAGES':  icon = 'message-square'
         if artifact == 'CONTACTS':  icon = 'user'
+    elif category == 'VITAL PRODUCT DATA':         icon = 'settings'
     return icon
     
 def generate_report(reportfolderbase, time_in_secs, time_HMS, extraction_type, image_input_path):
