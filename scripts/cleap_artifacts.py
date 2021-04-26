@@ -48,8 +48,8 @@ tosearch = {
 #   'chromium_bookmarks':('Browser', '**/mount/user/Bookmarks'),
     'chromeTopSites':('Browser', ('**/mount/user/Top Sites*', '**/chronos/LockScreenAppsProfile/Top Sites*', '**/chronos/Default/Top Sites*')),
     'recentactivity':('Recent Activity', '*/system_ce/*'),
-    'vpd':('Vital Product Data', '*/vpd/full-v2.txt'),
-    'fsData':('File System Data', '*/filesystem-details.txt'),
+    'vpd':('Settings', '*/vpd/full-v2.txt'),
+    'fsData':('Settings', '*/filesystem-details.txt'),
 }
 
 slash = '\\' if is_platform_windows() else '/'
