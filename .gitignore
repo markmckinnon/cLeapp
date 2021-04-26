@@ -1,2 +1,3 @@
 env/
 *.pyc
+scripts/.DS_Store
