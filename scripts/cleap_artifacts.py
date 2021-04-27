@@ -19,6 +19,7 @@ from scripts.artifacts.chromeBookmarks import get_chromeBookmarks
 from scripts.artifacts.chromeSearchTerms import get_chromeSearchTerms
 from scripts.artifacts.chromeTopSites import get_chromeTopSites
 from scripts.artifacts.chromeWebsearch import get_chromeWebsearch
+from scripts.artifacts.chromeNetworkActionPredictor import get_chromeNetworkActionPredictor
 from scripts.artifacts.eventlog import get_eventlog
 from scripts.artifacts.fsData import get_fsData
 from scripts.artifacts.recentactivity import get_recentactivity
@@ -48,6 +49,7 @@ tosearch = {
     'chromeWebsearch':('Browser', ('**/mount/user/History*', '**/chronos/LockScreenAppsProfile/History*', '**/chronos/Default/History*')),
 #   'chromium_bookmarks':('Browser', '**/mount/user/Bookmarks'),
     'chromeTopSites':('Browser', ('**/mount/user/Top Sites*', '**/chronos/LockScreenAppsProfile/Top Sites*', '**/chronos/Default/Top Sites*')),
+    'chromeNetworkActionPredictor':('Browser', ('*/mount/user/Network Action Predictor*','*/chronos/LockScreenAppsProfile/Network Action Predictor*', '*/chronos/Default/Network Action Predicator*')),
     'eventlog':('Logs', '*/var/log/eventlog.txt'),
     'fsData':('Settings', '*/filesystem-details.txt'),
     'recentactivity':('Recent Activity', '*/system_ce/*'),
