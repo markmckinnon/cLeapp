@@ -10,6 +10,7 @@ import traceback
 from scripts.artifacts.accounts_ce import get_accounts_ce
 from scripts.artifacts.accounts_ce_authtokens import get_accounts_ce_authtokens
 from scripts.artifacts.accounts_de import get_accounts_de
+from scripts.artifacts.Cast import get_Cast
 from scripts.artifacts.chrome import get_chrome
 from scripts.artifacts.chromeDownloads import get_chromeDownloads
 from scripts.artifacts.chromeCookies import get_chromeCookies
@@ -25,6 +26,8 @@ from scripts.artifacts.customDict import get_customDict
 from scripts.artifacts.eventlog import get_eventlog
 from scripts.artifacts.favicons import get_favicons
 from scripts.artifacts.fsData import get_fsData
+from scripts.artifacts.gmsDownloads import get_gmsDownloads
+from scripts.artifacts.gmsPluscontacts import get_gmsPluscontacts
 from scripts.artifacts.preferences import get_preferences
 from scripts.artifacts.recentactivity import get_recentactivity
 from scripts.artifacts.vpd import get_vpd
@@ -43,6 +46,7 @@ tosearch = {
     'accounts_ce': ('Accounts', '**/system_ce/*/accounts_ce.db'),
 #    'accounts_ce_authtokens':('Accounts', '**/accounts_ce.db'),
     'accounts_de': ('Accounts', '**/system_de/*/accounts_de.db'),
+    'Cast':('Android GMS', '*/com.google.android.gms/databases/cast.db'),
 # Browsers 
     'chrome':('Browser', ('**/mount/user/History*', '**/chronos/LockScreenAppsProfile/History*', '**/chronos/Default/History*')),
     'chromeDownloads':('Browser', ('**/mount/user/History*', '**/chronos/LockScreenAppsProfile/History*', '**/chronos/Default/History*')),
@@ -59,6 +63,8 @@ tosearch = {
     'eventlog':('Logs', '*/var/log/eventlog.txt'),
     'favicons':('Browser', ('*/mount/user/Favicons*','*/chronos/LockScreenAppsProfile/Favicons*', '*/chronos/Default/Favicons*')),
     'fsData':('Settings', '*/filesystem-details.txt'),
+    'gmsPluscontacts':('Android GMS', '*/data/com.google.android.gms/databases/pluscontacts.db*'),
+    'gmsDownloads':('Android GMS', '*/data/com.google.android.gms/databases/downloads.db*'),
     'preferences':('Preferences', '*/mount/user/Preferences'),
     'recentactivity':('Recent Activity', '*/system_ce/*'),
     'vpd':('Settings', '*/vpd/full-v2.txt'),
