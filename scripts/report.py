@@ -57,6 +57,7 @@ def get_icon_name(category, artifact):
     elif category == 'GOOGLE PLAY':     
         if artifact == 'GOOGLE PLAY SEARCHES':      icon = 'search'
         else:                                       icon = 'play'
+    elif category == 'ANDROID GMS':  icon = 'database'
     elif category == 'INSTALLED APPS':  icon = 'package'
     elif category == 'MEDIA METADATA':  icon = 'file-plus'
     elif category == 'NOW PLAYING':           icon = 'music'
