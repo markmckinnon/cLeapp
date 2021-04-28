@@ -23,6 +23,7 @@ from scripts.artifacts.chromeWebsearch import get_chromeWebsearch
 from scripts.artifacts.chromeNetworkActionPredictor import get_chromeNetworkActionPredictor
 from scripts.artifacts.customDict import get_customDict
 from scripts.artifacts.eventlog import get_eventlog
+from scripts.artifacts.favicons import get_favicons
 from scripts.artifacts.fsData import get_fsData
 from scripts.artifacts.recentactivity import get_recentactivity
 from scripts.artifacts.vpd import get_vpd
@@ -55,6 +56,7 @@ tosearch = {
     'chromeOmnibox':('Browser', ('*/mount/user/Shortcuts*','*/chronos/LockScreenAppsProfile/Shortcuts*', '*/chronos/Default/Shortcuts*')),
     'customDict':('User Settings', '*/mount/user/Custom Dictionary.txt'),
     'eventlog':('Logs', '*/var/log/eventlog.txt'),
+    'favicons':('Browser', ('*/mount/user/Favicons*','*/chronos/LockScreenAppsProfile/Favicons*', '*/chronos/Default/Favicons*')),
     'fsData':('Settings', '*/filesystem-details.txt'),
     'recentactivity':('Recent Activity', '*/system_ce/*'),
     'vpd':('Settings', '*/vpd/full-v2.txt'),
@@ -102,3 +104,4 @@ def process_artifact(files_found, artifact_func, artifact_name, seeker, report_f
         return
 
     logfunc('{} [{}] artifact completed'.format(artifact_name, artifact_func))
+    
