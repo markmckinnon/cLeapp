@@ -60,6 +60,10 @@ def get_icon_name(category, artifact):
     elif category == 'ANDROID GMS':  icon = 'database'
     elif category == 'TEAMS':
         if artifact == 'TEAMS MESSAGES':  icon = 'message-circle'
+        elif artifact == 'TEAMS USERS':  icon = 'users'
+        elif artifact == 'TEAMS CALL LOG':  icon = 'phone'
+        elif artifact == 'TEAMS ACTIVITY FEED':  icon = 'at-sign'
+        elif artifact == 'TEAMS FILE INFO':  icon = 'file'
         else:                           icon = 'file-text'
     elif category == 'INSTALLED APPS':  icon = 'package'
     elif category == 'MEDIA METADATA':  icon = 'file-plus'
