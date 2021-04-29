@@ -30,6 +30,7 @@ from scripts.artifacts.gmsDownloads import get_gmsDownloads
 from scripts.artifacts.gmsPluscontacts import get_gmsPluscontacts
 from scripts.artifacts.preferences import get_preferences
 from scripts.artifacts.recentactivity import get_recentactivity
+from scripts.artifacts.teams import get_teams
 from scripts.artifacts.vpd import get_vpd
 
 from scripts.cleapfuncs import *
@@ -67,6 +68,7 @@ tosearch = {
     'gmsDownloads':('Android GMS', '*/data/com.google.android.gms/databases/downloads.db*'),
     'preferences':('Preferences', '*/mount/user/Preferences'),
     'recentactivity':('Recent Activity', '*/system_ce/*'),
+    'teams':('Teams', '*/com.microsoft.teams/databases/SkypeTeams.db*'),
     'vpd':('Settings', '*/vpd/full-v2.txt'),
     
 }
