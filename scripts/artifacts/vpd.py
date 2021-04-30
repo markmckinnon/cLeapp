@@ -46,6 +46,7 @@ def get_vpd(files_found, report_folder, seeker, wrap_text):
             
             tsvname = 'Vital Product Data'
             tsv(report_folder, data_headers, data_list, tsvname)
+            
     
         else:
             logfunc('No Vital Product Data available')
