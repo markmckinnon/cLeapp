@@ -28,6 +28,7 @@ from scripts.artifacts.favicons import get_favicons
 from scripts.artifacts.fsData import get_fsData
 from scripts.artifacts.gmsDownloads import get_gmsDownloads
 from scripts.artifacts.gmsPluscontacts import get_gmsPluscontacts
+from scripts.artifacts.msRDP import get_msRDP
 from scripts.artifacts.preferences import get_preferences
 from scripts.artifacts.recentactivity import get_recentactivity
 from scripts.artifacts.teams import get_teams
@@ -66,6 +67,7 @@ tosearch = {
     'fsData':('Settings', '*/filesystem-details.txt'),
     'gmsPluscontacts':('Android GMS', '*/data/com.google.android.gms/databases/pluscontacts.db*'),
     'gmsDownloads':('Android GMS', '*/data/com.google.android.gms/databases/downloads.db*'),
+    'msRDP':('RDP', '*/com.microsoft.rdc.androidx/databases/RDPConnection.db*'),
     'preferences':('Preferences', '*/mount/user/Preferences'),
     'recentactivity':('Recent Activity', '*/system_ce/*'),
     'teams':('Teams', '*/com.microsoft.teams/databases/SkypeTeams.db*'),
