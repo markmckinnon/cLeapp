@@ -23,6 +23,7 @@ from scripts.artifacts.chromeTopSites import get_chromeTopSites
 from scripts.artifacts.chromeWebsearch import get_chromeWebsearch
 from scripts.artifacts.chromeNetworkActionPredictor import get_chromeNetworkActionPredictor
 from scripts.artifacts.customDict import get_customDict
+from scripts.artifacts.providerDownloader import get_providerDownloaders
 from scripts.artifacts.eventlog import get_eventlog
 from scripts.artifacts.favicons import get_favicons
 from scripts.artifacts.fsData import get_fsData
@@ -32,6 +33,7 @@ from scripts.artifacts.preferences import get_preferences
 from scripts.artifacts.recentactivity import get_recentactivity
 from scripts.artifacts.teams import get_teams
 from scripts.artifacts.vpd import get_vpd
+from scripts.artifacts.paloAltoGlobalProtect import get_paloAltoGlobalProtect
 
 from scripts.cleapfuncs import *
 
@@ -49,17 +51,17 @@ tosearch = {
     'accounts_de': ('Accounts', '**/system_de/*/accounts_de.db'),
     'Cast':('Android GMS', '*/com.google.android.gms/databases/cast.db'),
 # Browsers 
-    'chrome':('Browser', ('**/mount/user/History*', '**/chronos/LockScreenAppsProfile/History*', '**/chronos/Default/History*')),
-    'chromeDownloads':('Browser', ('**/mount/user/History*', '**/chronos/LockScreenAppsProfile/History*', '**/chronos/Default/History*')),
-    'chromeCookies':('Browser', ('**/mount/user/Cookies*',  '**/chronos/LockScreenAppsProfile/Cookies*', '**/chronos/Default/Cookies*')),
-    'chromeLoginData':('Browser', ('**/mount/user/Login Data*', '**/chronos/LockScreenAppsProfile/Login Data*', '**/chronos/Default/Login Data*')),
-#    'chromeAutofill':('Browser', ('**/mount/user/Web Data*', '**/chronos/LockScreenAppsProfile/Web Data*', '**/chronos/Default/Web Data*')),
-    'chromeSearchTerms':('Browser', ('**/mount/user/History*', '**/chronos/LockScreenAppsProfile/History*', '**/chronos/Default/History*')),
-    'chromeWebsearch':('Browser', ('**/mount/user/History*', '**/chronos/LockScreenAppsProfile/History*', '**/chronos/Default/History*')),
+    'chrome':('Browser', ('**/mount/user/History*', '**/chronos/LockScreenAppsProfile/History*', '**/chronos/Default/History*', '**/com.brave.browser/app_chrome/Default/History*')),
+    'chromeDownloads':('Browser', ('**/mount/user/History*', '**/chronos/LockScreenAppsProfile/History*', '**/chronos/Default/History*', '**/com.brave.browser/app_chrome/Default/History*')),
+    'chromeCookies':('Browser', ('**/mount/user/Cookies*',  '**/chronos/LockScreenAppsProfile/Cookies*', '**/chronos/Default/Cookies*', '**/com.brave.browser/app_chrome/Default/Cookies*')),
+    'chromeLoginData':('Browser', ('**/mount/user/Login Data*', '**/chronos/LockScreenAppsProfile/Login Data*', '**/chronos/Default/Login Data*', '**/com.brave.browser/app_chrome/Default/Login Data*')),
+#    'chromeAutofill':('Browser', ('**/mount/user/Web Data*', '**/chronos/LockScreenAppsProfile/Web Data*', '**/chronos/Default/Web Data*', '**/com.brave.browser/app_chrome/Default/Web Data*')),
+    'chromeSearchTerms':('Browser', ('**/mount/user/History*', '**/chronos/LockScreenAppsProfile/History*', '**/chronos/Default/History*', '**/com.brave.browser/app_chrome/Default/History*')),
+    'chromeWebsearch':('Browser', ('**/mount/user/History*', '**/chronos/LockScreenAppsProfile/History*', '**/chronos/Default/History*', '**/com.brave.browser/app_chrome/Default/History*')),
 #   'chromium_bookmarks':('Browser', '**/mount/user/Bookmarks'),
-    'chromeTopSites':('Browser', ('**/mount/user/Top Sites*', '**/chronos/LockScreenAppsProfile/Top Sites*', '**/chronos/Default/Top Sites*')),
-    'chromeNetworkActionPredictor':('Browser', ('*/mount/user/Network Action Predictor*','*/chronos/LockScreenAppsProfile/Network Action Predictor*', '*/chronos/Default/Network Action Predicator*')),
-    'chromeOmnibox':('Browser', ('*/mount/user/Shortcuts*','*/chronos/LockScreenAppsProfile/Shortcuts*', '*/chronos/Default/Shortcuts*')),
+    'chromeTopSites':('Browser', ('**/mount/user/Top Sites*', '**/chronos/LockScreenAppsProfile/Top Sites*', '**/chronos/Default/Top Sites*', '**/com.brave.browser/app_chrome/Default/Top Sites*')),
+    'chromeNetworkActionPredictor':('Browser', ('*/mount/user/Network Action Predictor*','*/chronos/LockScreenAppsProfile/Network Action Predictor*', '*/chronos/Default/Network Action Predicator*', '**/com.brave.browser/app_chrome/Default/Network Action Predicator*')),
+    'chromeOmnibox':('Browser', ('*/mount/user/Shortcuts*','*/chronos/LockScreenAppsProfile/Shortcuts*', '*/chronos/Default/Shortcuts*', '**/com.brave.browser/app_chrome/Default/Shortcuts*')),
     'customDict':('User Settings', '*/mount/user/Custom Dictionary.txt'),
     'eventlog':('Logs', '*/var/log/eventlog.txt'),
     'favicons':('Browser', ('*/mount/user/Favicons*','*/chronos/LockScreenAppsProfile/Favicons*', '*/chronos/Default/Favicons*')),
@@ -70,6 +72,8 @@ tosearch = {
     'recentactivity':('Recent Activity', '*/system_ce/*'),
     'teams':('Teams', '*/com.microsoft.teams/databases/SkypeTeams.db*'),
     'vpd':('Settings', '*/vpd/full-v2.txt'),
+    'providerDownloaders':('Downloads', '*/com.android.providers.downloads/databases/downloads.db*'),
+    'paloAltoGlobalProtect':('VPNs', ('*/com.paloaltonetworks.globalprotect/files/pan_gp_event.log', '*/com.paloaltonetworks.globalprotect/files/pan_gp_hrpt.xml')),
     
 }
 
