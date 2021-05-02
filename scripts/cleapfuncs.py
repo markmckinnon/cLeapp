@@ -6,12 +6,11 @@ import pathlib
 import re
 import sqlite3
 import sys
+from bs4 import BeautifulSoup
 try:
     import simplekml
 except:
     pass
-
-from bs4 import BeautifulSoup
 
 class OutputParameters:
     '''Defines the parameters that are common for '''
@@ -296,14 +295,69 @@ def kmlgen(report_folder, kmlactivity, data_list, data_headers):
     
 def get_browser_name(file_name):
 
-    if 'microsoft' in file_name.lower():
-        return 'Edge'
+    if 'brave' in file_name.lower():
+        return 'Brave'
     elif 'chrome' in file_name.lower():
         return 'Chrome'
     elif 'opera' in file_name.lower():
         return 'Opera'
     else:
-        return 'Unknown'
+        return 'Chrome'
 
+def get_ldb_records(ldb_path, prefix=''):
+    """Open a LevelDB at given path and return a list of records, optionally
+    filtered by a prefix string. Key and value are kept as byte strings."""
+
+    try:
+        from lib.ccl_chrome_indexeddb import ccl_leveldb
+    except ImportError as err:
+        print (err)
+        print (f' - Failed to import ccl_leveldb; unable to process {ldb_path}')
+        return []
+
+    # The ldb key and value are both bytearrays, so the prefix must be too. We allow
+    # passing the prefix into this function as a string for convenience.
+    if isinstance(prefix, str):
+        prefix = prefix.encode()
+
+    try:
+        db = ccl_leveldb.RawLevelDb(ldb_path)
+    except Exception as e:
+        print (f' - Could not open {ldb_path} as LevelDB; {e}')
+        return []
+
+    cleaned_records = []
+
+    try:
+        for record in db.iterate_records_raw():
+            cleaned_record = record.__dict__
+
+            if record.file_type.name == 'Ldb':
+                cleaned_record['key'] = record.key[:-8]
+
+            if cleaned_record['key'].startswith(prefix):
+                cleaned_record['key'] = cleaned_record['key'][len(prefix):]
+                cleaned_record['state'] = cleaned_record['state'].name
+                cleaned_record['file_type'] = cleaned_record['file_type'].name
+
+                cleaned_records.append(cleaned_record)
+
+    except ValueError:
+        print (f' - Exception reading LevelDB: ValueError')
+
+    except Exception as e:
+        print (f' - Exception reading LevelDB: {e}')
+
+    db.close()
+    return cleaned_records
+
+def read_varint(source):
+    result = 0
+    bytes_used = 0
+    for read in source:
+        result |= ((read & 0x7F) << (bytes_used * 7))
+        bytes_used += 1
+        if (read & 0x80) != 0x80:
+            return result, bytes_used
 
     
