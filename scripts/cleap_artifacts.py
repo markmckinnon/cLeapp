@@ -35,6 +35,9 @@ from scripts.artifacts.teams import get_teams
 from scripts.artifacts.vpd import get_vpd
 from scripts.artifacts.paloAltoGlobalProtect import get_paloAltoGlobalProtect
 from scripts.artifacts.LocalStorage import get_LocalStorage
+from scripts.artifacts.firefox import get_firefox
+from scripts.artifacts.firefoxDownloads import get_firefoxDownloads
+from scripts.artifacts.firefoxCookies import get_firefoxCookies
 
 from scripts.cleapfuncs import *
 
@@ -77,6 +80,9 @@ tosearch = {
     'paloAltoGlobalProtect':('VPNs', ('*/com.paloaltonetworks.globalprotect/files/pan_gp_event.log', '*/com.paloaltonetworks.globalprotect/files/pan_gp_hrpt.xml')),
     # For Level db put the location of the CURRENT File in and the directory will get processed
     'LocalStorage':('LevelDb', '**/Local Storage/leveldb/**'),
+    'firefox':('Browser', '**/org.mozilla.firefox/files/places.sqlite*'),
+    'firefoxDownloads':('Browser', '**/org.mozilla.firefox/files/places.sqlite*'),
+    'firefoxCookies':('Browser', '**/org.mozilla.firefox/databases/mozac_downloads_database*'),
 }
 
 slash = '\\' if is_platform_windows() else '/'
