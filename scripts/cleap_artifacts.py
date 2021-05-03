@@ -38,6 +38,7 @@ from scripts.artifacts.LocalStorage import get_LocalStorage
 from scripts.artifacts.firefox import get_firefox
 from scripts.artifacts.firefoxDownloads import get_firefoxDownloads
 from scripts.artifacts.firefoxCookies import get_firefoxCookies
+from scripts.artifacts.contacts import get_contacts
 
 from scripts.cleapfuncs import *
 
@@ -83,6 +84,7 @@ tosearch = {
     'firefox':('Browser', '**/org.mozilla.firefox/files/places.sqlite*'),
     'firefoxDownloads':('Browser', '**/org.mozilla.firefox/files/places.sqlite*'),
     'firefoxCookies':('Browser', '**/org.mozilla.firefox/databases/mozac_downloads_database*'),
+    'contacts':('Contacts', ('**/com.android.providers.contacts/databases/contact*', '**/com.android.providers.contacts/databases/profile*')),
 }
 
 slash = '\\' if is_platform_windows() else '/'
