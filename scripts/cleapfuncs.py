@@ -101,7 +101,7 @@ def does_table_exist(db, table_name):
         cursor = db.execute(query)
         for row in cursor:
             return True
-    except sqlite3Error as ex:
+    except sqlite3.Error as ex:
         logfunc(f"Query error, query={query} Error={str(ex)}")
     return False
 
@@ -188,7 +188,7 @@ def tsv(report_folder, data_headers, data_list, tsvname, source_file=None):
         os.makedirs(tsv_report_folder)
 
     if os.path.exists(os.path.join(tsv_report_folder, tsvname +'.tsv')):
-        with codecs.open(os.path.join(tsv_report_folder, tsvname +'.tsv'), 'a') as tsvfile:
+        with codecs.open(os.path.join(tsv_report_folder, tsvname +'.tsv'), 'a', 'utf-8') as tsvfile:
             tsv_writer = csv.writer(tsvfile, delimiter='\t')
             for i in data_list:
                 if source_file == None:
@@ -306,7 +306,8 @@ def get_browser_name(file_name):
 
 def get_ldb_records(ldb_path, prefix=''):
     """Open a LevelDB at given path and return a list of records, optionally
-    filtered by a prefix string. Key and value are kept as byte strings."""
+    filtered by a prefix string. Key and value are kept as byte strings.
+    This code was taken from the file utils.py from Ryan Benson's Hindsight project"""
 
     try:
         from lib.ccl_chrome_indexeddb import ccl_leveldb
@@ -352,6 +353,7 @@ def get_ldb_records(ldb_path, prefix=''):
     return cleaned_records
 
 def read_varint(source):
+    ''' This code was taken from the file utils.py from Ryan Benson's Hindsight project '''
     result = 0
     bytes_used = 0
     for read in source:

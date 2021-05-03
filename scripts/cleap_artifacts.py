@@ -34,7 +34,7 @@ from scripts.artifacts.recentactivity import get_recentactivity
 from scripts.artifacts.teams import get_teams
 from scripts.artifacts.vpd import get_vpd
 from scripts.artifacts.paloAltoGlobalProtect import get_paloAltoGlobalProtect
-from scripts.artifacts.IndexDB import get_IndexDB
+from scripts.artifacts.LocalStorage import get_LocalStorage
 
 from scripts.cleapfuncs import *
 
@@ -76,7 +76,7 @@ tosearch = {
     'providerDownloaders':('Downloads', '*/com.android.providers.downloads/databases/downloads.db*'),
     'paloAltoGlobalProtect':('VPNs', ('*/com.paloaltonetworks.globalprotect/files/pan_gp_event.log', '*/com.paloaltonetworks.globalprotect/files/pan_gp_hrpt.xml')),
     # For Level db put the location of the CURRENT File in and the directory will get processed
-    'IndexDB':('LevelDb', '**/IndexedDB/**'),
+    'LocalStorage':('LevelDb', '**/Local Storage/leveldb/**'),
 }
 
 slash = '\\' if is_platform_windows() else '/'

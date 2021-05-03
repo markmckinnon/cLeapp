@@ -8,7 +8,7 @@ from scripts.cleapfuncs import logfunc, tsv, timeline, is_platform_windows, get_
 
 
 def parse_ls_ldb_record(record):
-    """
+    """ This code was taken from the file chrome.py from Ryan Benson's Hindsight project
     From https://cs.chromium.org/chromium/src/components/services/storage/dom_storage/local_storage_impl.cc:
     // LevelDB database schema
     // =======================
@@ -90,6 +90,7 @@ def parse_ls_ldb_record(record):
 
 
 def get_local_storage(ls_path):
+    ''' This code was taken from the file utils.py from Ryan Benson's Hindsight project '''
     results = []
 
     print ('Local Storage:')
@@ -107,15 +108,15 @@ def get_local_storage(ls_path):
         ls_item = parse_ls_ldb_record(record)
         if ls_item and ls_item.get('record_type') == 'entry':
 #                results.append(Chrome.LocalStorageItem(
-            results.append(ls_path, ls_item['origin'], ls_item['key'], ls_item['value'],
-                           ls_item['seq'], ls_item['state'], str(ls_item['origin_file']))
+            results.append((ls_item['origin'], ls_item['key'], ls_item['value'],
+                            ls_item['seq'], ls_item['state'], str(ls_item['origin_file'])))
 
 #    self.artifacts_counts['Local Storage'] = len(results)
     print (f' - Parsed {len(results)} items from {len(filtered_listing)} files')
 #    self.parsed_storage.extend(results)
     return results
 
-def get_IndexDB(files_found, report_folder, seeker, wrap_text):
+def get_LocalStorage(files_found, report_folder, seeker, wrap_text):
     
     for file_found in files_found:
         file_found = str(file_found)
@@ -124,31 +125,25 @@ def get_IndexDB(files_found, report_folder, seeker, wrap_text):
         path_name = os.path.dirname(file_found)
         browser_name = get_browser_name(file_found)
 
-        results = get_local_storage(path_name)
-        all_rows = 0
-        usageentries = len(all_rows)
+        data_list = get_local_storage(path_name)
+
+        usageentries = len(data_list)
         if usageentries > 0:
-            report = ArtifactHtmlReport(f'{browser_name} History')
+            report = ArtifactHtmlReport(f'{browser_name} Local Storage')
             #check for existing and get next name for report file, so report from another file does not get overwritten
-            report_path = os.path.join(report_folder, f'{browser_name} History.temphtml')
+            report_path = os.path.join(report_folder, f'{browser_name} Local Storage.temphtml')
             report_path = get_next_unused_name(report_path)[:-9] # remove .temphtml
             report.start_artifact_report(report_folder, os.path.basename(report_path))
             report.add_script()
-            data_headers = ('Last Visit Time','URL','Title','Visit Count','Hidden')
-            data_list = []
-            for row in all_rows:
-                if wrap_text:
-                    data_list.append((textwrap.fill(row[0], width=100),row[1],row[2],row[3],row[4]))
-                else:
-                    data_list.append((row[0],row[1],row[2],row[3],row[4]))
+            data_headers = ('Origin','Key','Value','seq','state', 'origin_file')
             report.write_artifact_data_table(data_headers, data_list, file_found)
             report.end_artifact_report()
             
-            tsvname = f'{browser_name} History'
+            tsvname = f'{browser_name} Local Storage'
             tsv(report_folder, data_headers, data_list, tsvname)
             
-            tlactivity = f'{browser_name} History'
+            tlactivity = f'{browser_name} Local Storage'
             timeline(report_folder, tlactivity, data_list, data_headers)
         else:
-            logfunc(f'No {browser_name} history data available')
+            logfunc(f'No {browser_name} Local Storage data available')
         
