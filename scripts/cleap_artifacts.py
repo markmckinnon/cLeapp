@@ -39,6 +39,7 @@ from scripts.artifacts.firefox import get_firefox
 from scripts.artifacts.firefoxDownloads import get_firefoxDownloads
 from scripts.artifacts.firefoxCookies import get_firefoxCookies
 from scripts.artifacts.contacts import get_contacts
+from scripts.artifacts.realVnc import get_realVnc
 
 from scripts.cleapfuncs import *
 
@@ -78,13 +79,14 @@ tosearch = {
     'teams':('Teams', '*/com.microsoft.teams/databases/SkypeTeams.db*'),
     'vpd':('Settings', '*/vpd/full-v2.txt'),
     'providerDownloaders':('Downloads', '*/com.android.providers.downloads/databases/downloads.db*'),
-    'paloAltoGlobalProtect':('VPNs', ('*/com.paloaltonetworks.globalprotect/files/pan_gp_event.log', '*/com.paloaltonetworks.globalprotect/files/pan_gp_hrpt.xml')),
+    'paloAltoGlobalProtect':('VPN', ('*/com.paloaltonetworks.globalprotect/files/pan_gp_event.log', '*/com.paloaltonetworks.globalprotect/files/pan_gp_hrpt.xml')),
     # For Level db put the location of the CURRENT File in and the directory will get processed
     'LocalStorage':('LevelDb', '**/Local Storage/leveldb/**'),
     'firefox':('Browser', '**/org.mozilla.firefox/files/places.sqlite*'),
     'firefoxDownloads':('Browser', '**/org.mozilla.firefox/files/places.sqlite*'),
     'firefoxCookies':('Browser', '**/org.mozilla.firefox/databases/mozac_downloads_database*'),
     'contacts':('Contacts', ('**/com.android.providers.contacts/databases/contact*', '**/com.android.providers.contacts/databases/profile*')),
+    'realVnc':('VPN', '**/com.realvnc.viewer.android/files/com.realvnc.viewer.android/.vnc/ViewerStore/*.vnc'),
 }
 
 slash = '\\' if is_platform_windows() else '/'
