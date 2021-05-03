@@ -93,17 +93,17 @@ def get_local_storage(ls_path):
     ''' This code was taken from the file utils.py from Ryan Benson's Hindsight project '''
     results = []
 
-    print ('Local Storage:')
-    print (f' - Reading from {ls_path}')
+#    print ('Local Storage:')
+#    print (f' - Reading from {ls_path}')
 
     local_storage_listing = os.listdir(ls_path)
-    print (f' - {len(local_storage_listing)} files in Local Storage directory')
+#    print (f' - {len(local_storage_listing)} files in Local Storage directory')
     filtered_listing = []
 
     # Chrome v61+ used leveldb for LocalStorage, but kept old SQLite .localstorage files if upgraded.
     ls_ldb_path = ls_path
     ls_ldb_records = get_ldb_records(ls_ldb_path)
-    print (f' - Reading {len(ls_ldb_records)} Local Storage raw LevelDB records; beginning parsing')
+#    print (f' - Reading {len(ls_ldb_records)} Local Storage raw LevelDB records; beginning parsing')
     for record in ls_ldb_records:
         ls_item = parse_ls_ldb_record(record)
         if ls_item and ls_item.get('record_type') == 'entry':
@@ -112,7 +112,7 @@ def get_local_storage(ls_path):
                             ls_item['seq'], ls_item['state'], str(ls_item['origin_file'])))
 
 #    self.artifacts_counts['Local Storage'] = len(results)
-    print (f' - Parsed {len(results)} items from {len(filtered_listing)} files')
+#    print (f' - Parsed {len(results)} items from {len(filtered_listing)} files')
 #    self.parsed_storage.extend(results)
     return results
 
