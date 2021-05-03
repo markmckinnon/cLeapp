@@ -90,7 +90,7 @@ def does_column_exist_in_db(db, table_name, col_name):
             if row['name'].lower() == col_name:
                 return True
     except sqlite3.Error as ex:
-        print(f"Query error, query={query} Error={str(ex)}")
+        logfunc(f"Query error, query={query} Error={str(ex)}")
         pass
     return False
 
@@ -310,10 +310,10 @@ def get_ldb_records(ldb_path, prefix=''):
     This code was taken from the file utils.py from Ryan Benson's Hindsight project"""
 
     try:
-        from lib.ccl_chrome_indexeddb import ccl_leveldb
+        from scripts.lib.ccl_chrome_indexeddb import ccl_leveldb
     except ImportError as err:
-        print (err)
-        print (f' - Failed to import ccl_leveldb; unable to process {ldb_path}')
+        logfunc (str(err))
+        logfunc (str(f' - Failed to import ccl_leveldb; unable to process {ldb_path}'))
         return []
 
     # The ldb key and value are both bytearrays, so the prefix must be too. We allow
@@ -324,7 +324,7 @@ def get_ldb_records(ldb_path, prefix=''):
     try:
         db = ccl_leveldb.RawLevelDb(ldb_path)
     except Exception as e:
-        print (f' - Could not open {ldb_path} as LevelDB; {e}')
+        logfunc (str(f' - Could not open {ldb_path} as LevelDB; {e}'))
         return []
 
     cleaned_records = []
@@ -344,10 +344,10 @@ def get_ldb_records(ldb_path, prefix=''):
                 cleaned_records.append(cleaned_record)
 
     except ValueError:
-        print (f' - Exception reading LevelDB: ValueError')
+        logfunc (str(f' - Exception reading LevelDB: ValueError'))
 
     except Exception as e:
-        print (f' - Exception reading LevelDB: {e}')
+        logfunc (str(f' - Exception reading LevelDB: {e}'))
 
     db.close()
     return cleaned_records

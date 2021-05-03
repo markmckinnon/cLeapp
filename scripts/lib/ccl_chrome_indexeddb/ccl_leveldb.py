@@ -31,7 +31,7 @@ import enum
 from collections import namedtuple
 from types import MappingProxyType
 
-from lib.ccl_chrome_indexeddb import ccl_simplesnappy
+from scripts.lib.ccl_chrome_indexeddb import ccl_simplesnappy
 
 __version__ = "0.2"
 __description__ = "A module for reading LevelDB databases"
