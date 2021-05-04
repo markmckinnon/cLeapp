@@ -1,5 +1,7 @@
 import os
 import sqlite3
+import textwrap
+
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.cleapfuncs import logfunc, tsv, timeline, is_platform_windows, get_next_unused_name, open_sqlite_db_readonly, get_browser_name
 
@@ -43,17 +45,22 @@ def get_chromeOmnibox(files_found, report_folder, seeker, wrap_text):
             data_headers = ('Last Access Timestamp','Text','Fill Into Edit','URL','Contents','Description','Keyword','Number of Hits') 
             data_list = []
             for row in all_rows:
-                data_list.append((row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7]))
-
+                if wrap_text:
+                    data_list.append((row[0],row[1], row[2],(textwrap.fill(row[3], width=100)),row[4], (textwrap.fill(row[5], width=100)), row[6], row[7]))
+                else:
+                    data_list.append((row[0],row[1],row[2],row[3],row[4], row[5], row[6], row[7]))
+            
             report.write_artifact_data_table(data_headers, data_list, file_found)
             report.end_artifact_report()
             
             tsvname = f'{browser_name} Omnibox'
             tsv(report_folder, data_headers, data_list, tsvname)
             
-            tlactivity = f'{browser_name}Omnibox'
+            tlactivity = f'{browser_name} Omnibox'
             timeline(report_folder, tlactivity, data_list, data_headers)
+            
+            logfunc(f'{browser_name} Omnibox data parsed.')
         else:
-            logfunc('No Omnibox data available')
+            logfunc(f'No {browser_name} Omnibox data available')
         
         db.close()
