@@ -1,7 +1,7 @@
 import sqlite3
 import datetime
 import os
-import json
+
 from scripts.artifacts.appCookies import get_appCookies
 
 from scripts.artifact_report import ArtifactHtmlReport
