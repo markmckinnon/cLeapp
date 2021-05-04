@@ -69,7 +69,7 @@ def get_chromeCookies(files_found, report_folder, seeker, wrap_text):
             data_list = []
             for row in all_rows:
                 if wrap_text:
-                    data_list.append((row[0],row[1],(textwrap.fill(row[2], width=50)),row[3],row[4],row[5],row[6]))
+                    data_list.append((row[0],row[1],(textwrap.fill(row[2], width=50)),textwrap.fill(row[3], width=50),row[4],row[5],row[6]))
                 else:
                     data_list.append((row[0],row[1],row[2],row[3],row[4],row[5],row[6]))
 

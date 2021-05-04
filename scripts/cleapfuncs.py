@@ -294,15 +294,14 @@ def kmlgen(report_folder, kmlactivity, data_list, data_headers):
     kml.save(os.path.join(kml_report_folder, f'{kmlactivity}.kml'))
     
 def get_browser_name(file_name):
-
-    if 'brave' in file_name.lower():
+    if 'com.brave.browser' in file_name.lower():
         return 'Brave'
-    elif 'chrome' in file_name.lower():
-        return 'Chrome'
-    elif 'opera' in file_name.lower():
+    elif 'com.opera.browser' in file_name.lower():
         return 'Opera'
+    elif 'com.duckduckgo.mobile.android' in file_name.lower():
+        return 'Duck Duck Go'
     else:
-        return 'Chrome'
+        return 'Chromebook'
 
 def get_ldb_records(ldb_path, prefix=''):
     """Open a LevelDB at given path and return a list of records, optionally
