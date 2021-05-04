@@ -55,6 +55,9 @@ def get_chrome(files_found, report_folder, seeker, wrap_text):
             tlactivity = f'{browser_name} History'
             timeline(report_folder, tlactivity, data_list, data_headers)
         else:
-            logfunc(f'No {browser_name} history data available')
+            identifier = file_found.split(os.sep)
+            identifier = str(identifier[-3:])
+            
+            logfunc(f'No {browser_name} {identifier} data available')
         
         db.close()
