@@ -44,6 +44,8 @@ from scripts.artifacts.realVnc import get_realVnc
 from scripts.artifacts.FacebookMessenger import get_FacebookMessenger
 from scripts.artifacts.skype import get_skype
 from scripts.artifacts.tiktokUsers import get_tiktokUsers
+from scripts.artifacts.InstragramUsers import get_instragramUsers
+
 from scripts.cleapfuncs import *
 
 # GREP searches for each module
@@ -94,6 +96,7 @@ tosearch = {
     'FacebookMessenger':('Facebook Messenger', ('**/threads_db2*', '**/com.facebook.orca/app_webview/Cookies*')),
     'skype':('Skype', ('**/com.skype.raider/databases/*', '**/com.skype.raider/app_webview/Cookies*')),
     'tiktokUsers':('TikTok', ('**/com.zhiliaoapp.musically/databases/db_im_xx*', '**/com.zhiliaoapp.musically/app_webview/Cookies*')),
+    'instragramUsers':('Instragram', ('**/com.instagram.android/databases/direct.db*', '**/com.instagram.android/app_webview/Cookies*')),
 }
 
 slash = '\\' if is_platform_windows() else '/'
