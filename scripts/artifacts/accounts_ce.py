@@ -5,7 +5,7 @@ import shutil
 import sqlite3
 
 from scripts.artifact_report import ArtifactHtmlReport
-from scripts.cleapfuncs import logfunc, tsv, is_platform_windows, open_sqlite_db_readonly
+from scripts.cleapfuncs import logfunc, tsv, is_platform_windows, open_sqlite_db_readonly, usergen
 
 def get_accounts_ce(files_found, report_folder, seeker, wrap_text):
 
@@ -48,13 +48,18 @@ def process_accounts_ce(folder, uid, report_folder):
         report.add_script()
         data_headers = ('Name', 'Type', 'Password')
         data_list = []
+        data_list_usernames = []
         for row in all_rows:
             data_list.append((row[0], row[1], row[2]))
+            data_list_usernames.append((row[0], row[1], f'Password: {row[2]}, Artifact: accounts_ce {uid}'))
         report.write_artifact_data_table(data_headers, data_list, folder)
         report.end_artifact_report()
         
         tsvname = f'accounts ce {uid}'
         tsv(report_folder, data_headers, data_list, tsvname)
+        
+        usergen(report_folder, data_list_usernames)
+        
     else:
         logfunc(f'No accounts_ce_{uid} data available')    
     db.close()
