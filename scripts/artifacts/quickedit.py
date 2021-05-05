@@ -13,7 +13,7 @@ def get_quickedit(files_found, report_folder, seeker, wrap_text):
         
         file_name = str(file_found)
         if (file_name.lower().endswith('cookies')):
-            get_appCookies(file_found, report_folder, seeker, wrap_text, "TikTok")
+            get_appCookies(file_found, report_folder, seeker, wrap_text, "Quickedit")
             continue
         if not os.path.basename(file_name) == 'edit.db': # skip -journal and other files
             continue
