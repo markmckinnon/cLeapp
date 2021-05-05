@@ -292,7 +292,44 @@ def kmlgen(report_folder, kmlactivity, data_list, data_headers):
     db.commit()
     db.close()
     kml.save(os.path.join(kml_report_folder, f'{kmlactivity}.kml'))
+
+def usergen(report_folder, data_list_usernames):
+    report_folder = report_folder.rstrip('/')
+    report_folder = report_folder.rstrip('\\')
+    report_folder_base, tail = os.path.split(report_folder)
+    udb_report_folder = os.path.join(report_folder_base, '_Usernames DB')
     
+    if os.path.isdir(udb_report_folder):
+        usernames = os.path.join(udb_report_folder, '_usernames.db')
+        db = sqlite3.connect(usernames)
+        cursor = db.cursor()
+        cursor.execute('''PRAGMA synchronous = EXTRA''')
+        cursor.execute('''PRAGMA journal_mode = WAL''')
+        db.commit()
+    else:
+        os.makedirs(udb_report_folder)
+        usernames = os.path.join(udb_report_folder, '_usernames.db')
+        db = sqlite3.connect(usernames)
+        cursor = db.cursor()
+        cursor.execute(
+        """
+        CREATE TABLE data(username TEXT, appname TEXT, data TEXT)
+        """
+            )
+        db.commit()
+    
+    a = 0
+    length = (len(data_list_usernames))
+    while a < length:
+        user = data_list_usernames[a][0]
+        app = data_list_usernames[a][1]
+        data = data_list_usernames[a][2]
+        cursor.execute("INSERT INTO data VALUES(?,?,?)", (user, app, data))
+        a += 1
+    db.commit()
+    db.close()
+    
+
 def get_browser_name(file_name):
     if 'com.brave.browser' in file_name.lower():
         return 'Brave'
