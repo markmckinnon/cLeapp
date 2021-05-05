@@ -34,8 +34,8 @@ def get_instragramUsers(files_found, report_folder, seeker, wrap_text):
             usageentries = 0
             
         if usageentries > 0:
-            report = ArtifactHtmlReport('Instragram - Users')
-            report.start_artifact_report(report_folder, 'Instragram - Users')
+            report = ArtifactHtmlReport('Instagram - Users')
+            report.start_artifact_report(report_folder, 'Instagram - Users')
             report.add_script()
             data_headers = thread_user_fields # Don't remove the comma, that is required to make this a tuple as there is only 1 element
             data_list = []
@@ -64,14 +64,14 @@ def get_instragramUsers(files_found, report_folder, seeker, wrap_text):
             report.write_artifact_data_table(data_headers, data_list, file_found)
             report.end_artifact_report()
             
-            tsvname = 'Instragram - Users'
+            tsvname = 'Instagram - Users'
             tsv(report_folder, data_headers, data_list, tsvname)
             
-            tlactivity = 'Instragram - Users'
+            tlactivity = 'Instagram - Users'
             timeline(report_folder, tlactivity, data_list, data_headers)
             
         else:
-            logfunc('No Instragram - Users available')
+            logfunc('No Instagram - Users available')
                 
 
         db.close

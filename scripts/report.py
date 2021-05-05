@@ -54,6 +54,7 @@ def get_icon_name(category, artifact):
     elif category == 'SETTINGS':         icon = 'settings'
     elif category == 'PREFERENCES':         icon = 'settings'
     elif category == 'GBOARD KEYBOARD': icon = 'edit-3'
+    elif category == 'QUICKEDIT': icon = 'edit'
     elif category == 'GOOGLE DOCS':     icon = 'file'
     elif category == 'GOOGLE NOW & QUICKSEARCH': icon = 'search'
     elif category == 'GOOGLE PLAY':     
@@ -67,6 +68,18 @@ def get_icon_name(category, artifact):
         elif artifact == 'TEAMS ACTIVITY FEED':  icon = 'at-sign'
         elif artifact == 'TEAMS FILE INFO':  icon = 'file'
         else:                           icon = 'file-text'
+    elif category == 'SKYPE':
+        if artifact == 'SKYPE - LOCAL ADDRESS BOOK CONTACTS':  icon = 'users'
+        else:                               icon = 'corner-down-right'
+    elif category == 'TIKTOK':
+        if artifact == 'TIKTOK - USERS':  icon = 'users'
+        else:                               icon = 'corner-down-right'
+    elif category == 'INSTAGRAM':
+        if artifact == 'INSTAGRAM - USERS':  icon = 'users'
+        else:                               icon = 'instagram'
+    elif category == 'GOOGLEDOCS':
+        if 'SHEETS' in artifact:  icon = 'bar-chart-2'
+        else:                               icon = 'align-left'
     elif category == 'INSTALLED APPS':  icon = 'package'
     elif category == 'MEDIA METADATA':  icon = 'file-plus'
     elif category == 'NOW PLAYING':           icon = 'music'

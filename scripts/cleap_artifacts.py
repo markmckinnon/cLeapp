@@ -98,7 +98,7 @@ tosearch = {
     'FacebookMessenger':('Facebook Messenger', ('**/threads_db2*', '**/com.facebook.orca/app_webview/Cookies*')),
     'skype':('Skype', ('**/com.skype.raider/databases/*', '**/com.skype.raider/app_webview/Cookies*')),
     'tiktokUsers':('TikTok', ('**/com.zhiliaoapp.musically/databases/db_im_xx*', '**/com.zhiliaoapp.musically/app_webview/Cookies*')),
-    'instragramUsers':('Instragram', ('**/com.instagram.android/databases/direct.db*', '**/com.instagram.android/app_webview/Cookies*')),
+    'instragramUsers':('Instagram', ('**/com.instagram.android/databases/direct.db*', '**/com.instagram.android/app_webview/Cookies*')),
     'quickedit': ('QuickEdit', ('**/com.rhmsoft.edit/databases/edit.db*', '**/com.zhiliaoapp.musically/app_webview/Cookies*')),
     'googleDocs':('GoogleDocs', ('**/com.google.android.apps.docs.editors.*/databases/Storage.db*', '**/com.google.android.apps.docs.editors.*/databases/DocList.db*'))
 }
