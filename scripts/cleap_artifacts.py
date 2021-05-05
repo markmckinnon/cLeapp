@@ -41,6 +41,11 @@ from scripts.artifacts.firefoxDownloads import get_firefoxDownloads
 from scripts.artifacts.firefoxCookies import get_firefoxCookies
 from scripts.artifacts.contacts import get_contacts
 from scripts.artifacts.realVnc import get_realVnc
+from scripts.artifacts.FacebookMessenger import get_FacebookMessenger
+from scripts.artifacts.skype import get_skype
+from scripts.artifacts.tiktokUsers import get_tiktokUsers
+from scripts.artifacts.InstragramUsers import get_instragramUsers
+from scripts.artifacts.quickedit import get_quickedit
 
 from scripts.cleapfuncs import *
 
@@ -89,6 +94,11 @@ tosearch = {
     'firefoxCookies':('Browser', '**/org.mozilla.firefox/databases/mozac_downloads_database*'),
     'contacts':('Contacts', ('**/com.android.providers.contacts/databases/contact*', '**/com.android.providers.contacts/databases/profile*')),
     'realVnc':('VPN', '**/com.realvnc.viewer.android/files/com.realvnc.viewer.android/.vnc/ViewerStore/*.vnc'),
+    'FacebookMessenger':('Facebook Messenger', ('**/threads_db2*', '**/com.facebook.orca/app_webview/Cookies*')),
+    'skype':('Skype', ('**/com.skype.raider/databases/*', '**/com.skype.raider/app_webview/Cookies*')),
+    'tiktokUsers':('TikTok', ('**/com.zhiliaoapp.musically/databases/db_im_xx*', '**/com.zhiliaoapp.musically/app_webview/Cookies*')),
+    'instragramUsers':('Instragram', ('**/com.instagram.android/databases/direct.db*', '**/com.instagram.android/app_webview/Cookies*')),
+    'quickedit': ('QuickEdit', ('**/com.rhmsoft.edit/databases/edit.db*', '**/com.zhiliaoapp.musically/app_webview/Cookies*')),
 }
 
 slash = '\\' if is_platform_windows() else '/'
