@@ -6,7 +6,7 @@ import sqlite3
 from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
 from scripts.artifact_report import ArtifactHtmlReport
-from scripts.cleapfuncs import logfunc, tsv, timeline, is_platform_windows, get_next_unused_name, open_sqlite_db_readonly, get_browser_name
+from scripts.cleapfuncs import logfunc, tsv, timeline, is_platform_windows, get_next_unused_name, open_sqlite_db_readonly, get_browser_name, usergen
 
 def decrypt(ciphertxt, key=b"peanuts"):
     if re.match(rb"^v1[01]",ciphertxt): 
@@ -77,11 +77,13 @@ def get_chromeLoginData(files_found, report_folder, seeker, wrap_text):
             report = ArtifactHtmlReport(f'{browser_name} Login Data')
             #check for existing and get next name for report file, so report from another file does not get overwritten
             report_path = os.path.join(report_folder, f'{browser_name} Login Data.temphtml')
+            html_report = report.get_report_file_path()
             report_path = get_next_unused_name(report_path)[:-9] # remove .temphtml
             report.start_artifact_report(report_folder, os.path.basename(report_path))
             report.add_script()
             data_headers = ('Created Time','Username','Password','Origin URL','Blacklisted by User', 'Browser Name') 
             data_list = []
+            data_list_usernames = []
             for row in all_rows:
                 password = ''
                 password_enc = row[1]
@@ -89,7 +91,8 @@ def get_chromeLoginData(files_found, report_folder, seeker, wrap_text):
                     password = decrypt(password_enc).decode("utf-8", 'replace')
                 valid_date = get_valid_date(row[2], row[3])
                 data_list.append( (valid_date, row[0], password, row[4], row[5], browser_name) )
-
+                data_list_usernames.append(
+                    (row[0], row[4], f'{browser_name} login data', html_report, f'Password: {password}'))
             report.write_artifact_data_table(data_headers, data_list, file_found)
             report.end_artifact_report()
             
@@ -98,6 +101,7 @@ def get_chromeLoginData(files_found, report_folder, seeker, wrap_text):
             
             tlactivity = f'{browser_name} Login Data'
             timeline(report_folder, tlactivity, data_list, data_headers)
+            usergen(report_folder, data_list_usernames)
         else:
             logfunc(f'No {browser_name} Login Data available')
         

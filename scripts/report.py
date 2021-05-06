@@ -41,6 +41,7 @@ def get_icon_name(category, artifact):
         elif artifact.find('OFFLINE PAGES') >= 0:   icon = 'cloud-off'
         else:                                       icon = 'chrome'
     elif category == 'CONTACTS':    icon = 'users'
+    elif category == 'CROSS ARTIFACT USERIDS': icon = 'users'
     elif category == 'DUO':     
         if artifact == 'DUO CONTACTS':              icon = 'users'
         else:                                       icon = 'message-square'
@@ -95,6 +96,7 @@ def get_icon_name(category, artifact):
     elif category == 'SCRIPT LOGS':     icon = 'archive'
     elif category == 'SMS & MMS':       icon = 'message-square'
     elif category == 'SQLITE JOURNALING': icon = 'book-open'
+    elif category == 'SYNCED USERS' : icon = 'user'
     elif category == 'USAGE STATS':     icon = 'bar-chart-2'
     elif category == 'USER SETTINGS': icon = 'book'
     elif category == 'WELLBEING' or category == 'WELLBEING ACCOUNT': 

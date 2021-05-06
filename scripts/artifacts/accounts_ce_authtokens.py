@@ -5,7 +5,7 @@ import shutil
 import sqlite3
 
 from scripts.artifact_report import ArtifactHtmlReport
-from scripts.cleapfuncs import logfunc, tsv, is_platform_windows, open_sqlite_db_readonly
+from scripts.cleapfuncs import logfunc, tsv, is_platform_windows, open_sqlite_db_readonly, usergen
 
 def get_accounts_ce_authtokens(files_found, report_folder, seeker, wrap_text):
 
@@ -48,16 +48,20 @@ def process_accounts_ce_authtokens(folder, uid, report_folder):
     if usageentries > 0:
         report = ArtifactHtmlReport('Authokens')
         report.start_artifact_report(report_folder, f'Authtokens_{uid}')
+        html_report = report.get_report_file_path()
         report.add_script()
         data_headers = ('ID', 'Name', 'Account Type','Authtoken Type', 'Authtoken')
         data_list = []
+        data_list_usernames = []
         for row in all_rows:
             data_list.append((row[0], row[1], row[2], row[3], row[4]))
+            data_list_usernames.append((row[1], row[2], f'Authtokens_{uid}', html_report, None))
         report.write_artifact_data_table(data_headers, data_list, folder)
         report.end_artifact_report()
         
         tsvname = f'authtokens {uid}'
         tsv(report_folder, data_headers, data_list, tsvname)
+        usergen(report_folder, data_list_usernames)
     else:
         logfunc(f'No Authtokens_{uid} data available')    
     db.close()

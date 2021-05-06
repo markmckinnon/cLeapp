@@ -5,7 +5,7 @@ import shutil
 import sqlite3
 
 from scripts.artifact_report import ArtifactHtmlReport
-from scripts.cleapfuncs import logfunc, tsv, timeline, is_platform_windows, open_sqlite_db_readonly
+from scripts.cleapfuncs import logfunc, tsv, timeline, is_platform_windows, open_sqlite_db_readonly, usergen
 
 def get_accounts_de(files_found, report_folder, seeker, wrap_text):
 
@@ -45,11 +45,15 @@ def process_accounts_de(folder, uid, report_folder):
     if usageentries > 0:
         report = ArtifactHtmlReport('Accounts_de')
         report.start_artifact_report(report_folder, f'accounts_de_{uid}')
+        html_report = report.get_report_file_path()
         report.add_script()
         data_headers = ('Last password entry','Name','Type')
         data_list = []
+        data_list_usernames = []
         for row in all_rows:
             data_list.append((row[0], row[1], row[2]))
+            data_list_usernames.append((row[1], row[2], 'Accounts_de', html_report, None))
+
         report.write_artifact_data_table(data_headers, data_list, folder)
         report.end_artifact_report()
         
@@ -58,6 +62,8 @@ def process_accounts_de(folder, uid, report_folder):
         
         tlactivity = f'Accounts DE {uid}'
         timeline(report_folder, tlactivity, data_list, data_headers)
+
+        usergen(report_folder, data_list_usernames)
     else:
         logfunc(f'No accounts_de_{uid} data available')    
     db.close()

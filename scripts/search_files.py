@@ -47,7 +47,10 @@ class FileSeekerDir(FileSeekerBase):
 class FileSeekerTar(FileSeekerBase):
     def __init__(self, tar_file_path, temp_folder):
         FileSeekerBase.__init__(self)
-        self.is_gzip = tar_file_path.lower().endswith('gz')
+        if (tar_file_path.lower().endswith('gz') or tar_file_path.lower().endswith('tgz')):
+            self.is_gzip = True
+        else:
+            self.is_gzip = False
         mode ='r:gz' if self.is_gzip else 'r'
         self.tar_file = tarfile.open(tar_file_path, mode)
         self.temp_folder = temp_folder

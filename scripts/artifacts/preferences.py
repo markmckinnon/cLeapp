@@ -22,7 +22,7 @@ def get_preferences(files_found, report_folder, seeker, wrap_text):
     for file_found in files_found:
         file_found = str(file_found)
         
-        with open(file_found, "r") as f:
+        with open(file_found, "rb") as f:
             data = json.load(f)
             
         for x, y in data.items():

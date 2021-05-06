@@ -45,13 +45,14 @@ def process_accounts_ce(folder, uid, report_folder):
     if usageentries > 0:
         report = ArtifactHtmlReport('Accounts_ce')
         report.start_artifact_report(report_folder, f'accounts_ce_{uid}')
+        html_report = report.get_report_file_path()
         report.add_script()
         data_headers = ('Name', 'Type', 'Password')
         data_list = []
         data_list_usernames = []
         for row in all_rows:
             data_list.append((row[0], row[1], row[2]))
-            data_list_usernames.append((row[0], row[1], f'Password: {row[2]}, Artifact: accounts_ce {uid}'))
+            data_list_usernames.append((row[0], row[1], 'Accounts_ce', html_report, f'Password: {row[2]}, Artifact: accounts_ce {uid}'))
         report.write_artifact_data_table(data_headers, data_list, folder)
         report.end_artifact_report()
         

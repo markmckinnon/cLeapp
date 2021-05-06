@@ -48,6 +48,8 @@ from scripts.artifacts.tiktokUsers import get_tiktokUsers
 from scripts.artifacts.InstragramUsers import get_instragramUsers
 from scripts.artifacts.quickedit import get_quickedit
 from scripts.artifacts.googleDocs import get_googleDocs
+from scripts.artifacts.chromeSync import get_chromeSync
+from scripts.artifacts.crossArtifactUserids import get_crossArtifactUserids
 
 from scripts.cleapfuncs import *
 
@@ -102,7 +104,11 @@ tosearch = {
     'tiktokUsers':('TikTok', ('**/com.zhiliaoapp.musically/databases/db_im_xx*', '**/com.zhiliaoapp.musically/app_webview/Cookies*')),
     'instragramUsers':('Instagram', ('**/com.instagram.android/databases/direct.db*', '**/com.instagram.android/app_webview/Cookies*')),
     'quickedit': ('QuickEdit', ('**/com.rhmsoft.edit/databases/edit.db*', '**/com.zhiliaoapp.musically/app_webview/Cookies*')),
-    'googleDocs':('GoogleDocs', ('**/com.google.android.apps.docs.editors.*/databases/Storage.db*', '**/com.google.android.apps.docs.editors.*/databases/DocList.db*'))
+    'googleDocs':('GoogleDocs', ('**/com.google.android.apps.docs.editors.*/databases/Storage.db*', '**/com.google.android.apps.docs.editors.*/databases/DocList.db*')),
+    'chromeSync':('Synced Users', '**/com.google.android.gms/databases/chromesync.data_store*'),
+    # This must always be the last artifact to run.  Dummy file used as a place holder that should always be there
+    # in the image.  Needed a file to make sure this artifact will be generated.
+    'crossArtifactUserids':('Cross Artifact Userids', '**/mount/user/.bash_profile')
 }
 
 slash = '\\' if is_platform_windows() else '/'

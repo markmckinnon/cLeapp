@@ -35,7 +35,7 @@ def get_favicons(files_found, report_folder, seeker, wrap_text):
             for row in all_rows:
                 blob = row[2]
                 blobid = blobid + 1
-                writtento = f'{report_folder}/fav{blobid}.png'
+                writtento = f'{report_folder}fav{blobid}.png'
                 with open(f'{writtento}', 'wb') as file:
                     file.write(blob)
                 blob_location = f'<a href="{writtento}"><img src="{writtento}"></a>'
