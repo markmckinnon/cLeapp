@@ -64,4 +64,6 @@ def get_favicons(files_found, report_folder, seeker, wrap_text):
             tsv(report_folder, data_headers, data_list, tsvname)
     
         else:
-            logfunc('No Favicons Data available')
+            identifier = file_found.split(os.sep)
+            identifier = str(identifier[-3:])
+            logfunc(f'No Favicons {identifier} Data available')

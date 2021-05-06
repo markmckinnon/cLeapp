@@ -75,7 +75,7 @@ def get_icon_name(category, artifact):
         if artifact == 'TIKTOK - USERS':  icon = 'users'
         else:                               icon = 'corner-down-right'
     elif category == 'INSTAGRAM':
-        if artifact == 'INSTAGRAM - USERS':  icon = 'users'
+        if artifact == 'INSTAGRAM USERS':  icon = 'users'
         else:                               icon = 'instagram'
     elif category == 'GOOGLEDOCS':
         if 'SHEETS' in artifact:  icon = 'bar-chart-2'
