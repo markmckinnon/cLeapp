@@ -1,8 +1,7 @@
-import sqlite3
-import textwrap
+import os
 
 from scripts.artifact_report import ArtifactHtmlReport
-from scripts.cleapfuncs import logfunc, tsv, timeline, is_platform_windows, open_sqlite_db_readonly, usergen
+from scripts.cleapfuncs import logfunc, tsv, timeline, open_sqlite_db_readonly, usergen
 
 def get_chromeSync(files_found, report_folder, seeker, wrap_text):
     
@@ -22,13 +21,14 @@ def get_chromeSync(files_found, report_folder, seeker, wrap_text):
         if usageentries > 0:
             report = ArtifactHtmlReport('Chrome Synced Users')
             report.start_artifact_report(report_folder, 'Chrome Synced Users')
+            html_report = report.get_report_file_path()
             report.add_script()
             data_headers = ('url origin', 'url realm', 'username')
             data_list = []
             data_list_usernames = []
             for row in all_rows:
                 data_list.append((row[0],row[1],row[2]))
-                data_list_usernames.append((row[2], row[2], ''))
+                data_list_usernames.append((row[2], row[2], 'ChronmeSync', html_report, ''))
     
             report.write_artifact_data_table(data_headers, data_list, file_found)
             report.end_artifact_report()

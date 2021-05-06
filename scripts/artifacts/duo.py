@@ -1,8 +1,7 @@
-import sqlite3
-import textwrap
+import os
 
 from scripts.artifact_report import ArtifactHtmlReport
-from scripts.cleapfuncs import logfunc, tsv, timeline, is_platform_windows, open_sqlite_db_readonly, usergen
+from scripts.cleapfuncs import logfunc, tsv, timeline, open_sqlite_db_readonly, usergen
 
 def get_duo(files_found, report_folder, seeker, wrap_text):
     
@@ -26,13 +25,14 @@ def get_duo(files_found, report_folder, seeker, wrap_text):
         if usageentries > 0:
             report = ArtifactHtmlReport('Duo Contacts')
             report.start_artifact_report(report_folder, 'Duo Contacts')
+            html_report = report.get_report_file_path()
             report.add_script()
             data_headers = ('Last System Contact Update', 'User ID', 'Contact Display Name') 
             data_list = []
             data_list_usernames = []
             for row in all_rows:
                 data_list.append((row[0],row[1],row[2]))
-                data_list_usernames.append((row[1], 'Duo Contacts', f'Display Name: {row[2]}, Last System Contact Update: {row[0]}'))
+                data_list_usernames.append((row[1], 'Duo Contacts', 'DUO', html_report, f'Display Name: {row[2]}, Last System Contact Update: {row[0]}'))
     
             report.write_artifact_data_table(data_headers, data_list, file_found)
             report.end_artifact_report()

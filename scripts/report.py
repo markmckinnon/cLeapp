@@ -41,6 +41,7 @@ def get_icon_name(category, artifact):
         elif artifact.find('OFFLINE PAGES') >= 0:   icon = 'cloud-off'
         else:                                       icon = 'chrome'
     elif category == 'CONTACTS':    icon = 'users'
+    elif category == 'CROSS ARTIFACT CONTACTS': icon = 'users'
     elif category == 'DUO':     
         if artifact == 'DUO CONTACTS':              icon = 'users'
         else:                                       icon = 'message-square'

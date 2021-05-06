@@ -313,7 +313,7 @@ def usergen(report_folder, data_list_usernames):
         cursor = db.cursor()
         cursor.execute(
         """
-        CREATE TABLE data(username TEXT, appname TEXT, data TEXT)
+        CREATE TABLE data(username TEXT, appname TEXT, artifactname text, html_report text, data TEXT)
         """
             )
         db.commit()
@@ -323,8 +323,10 @@ def usergen(report_folder, data_list_usernames):
     while a < length:
         user = data_list_usernames[a][0]
         app = data_list_usernames[a][1]
-        data = data_list_usernames[a][2]
-        cursor.execute("INSERT INTO data VALUES(?,?,?)", (user, app, data))
+        artifact = data_list_usernames[a][2]
+        html_report = data_list_usernames[a][3]
+        data = data_list_usernames[a][4]
+        cursor.execute("INSERT INTO data VALUES(?,?,?,?,?)", (user, app, artifact, html_report, data))
         a += 1
     db.commit()
     db.close()
