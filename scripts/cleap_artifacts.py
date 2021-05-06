@@ -48,6 +48,7 @@ from scripts.artifacts.tiktokUsers import get_tiktokUsers
 from scripts.artifacts.InstragramUsers import get_instragramUsers
 from scripts.artifacts.quickedit import get_quickedit
 from scripts.artifacts.googleDocs import get_googleDocs
+from scripts.artifacts.chromeSync import get_chromeSync
 
 from scripts.cleapfuncs import *
 
@@ -103,6 +104,7 @@ tosearch = {
     'instragramUsers':('Instagram', ('**/com.instagram.android/databases/direct.db*', '**/com.instagram.android/app_webview/Cookies*')),
     'quickedit': ('QuickEdit', ('**/com.rhmsoft.edit/databases/edit.db*', '**/com.zhiliaoapp.musically/app_webview/Cookies*')),
     'googleDocs':('GoogleDocs', ('**/com.google.android.apps.docs.editors.*/databases/Storage.db*', '**/com.google.android.apps.docs.editors.*/databases/DocList.db*')),
+    'chromeSync':('Synced Users', '**/com.google.android.gms/databases/chromesync.data_store*'),
 }
 
 slash = '\\' if is_platform_windows() else '/'
