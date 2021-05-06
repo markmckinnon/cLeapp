@@ -13,7 +13,7 @@ from time import process_time, gmtime, strftime
 
 def main():
     parser = argparse.ArgumentParser(description='CLEAPP: Chrome Logs, Events, and Protobuf Parser.')
-    parser.add_argument('-t', choices=['fs','tar','zip', 'gz'], required=False, type=str.lower, action="store", help="Input type (fs = extracted to file system folder)")
+    parser.add_argument('-t', choices=['fs','tar','zip', 'gz', 'tgz'], required=False, type=str.lower, action="store", help="Input type (fs = extracted to file system folder)")
     parser.add_argument('-o', '--output_path', required=False, action="store", help='Output folder path')
     parser.add_argument('-i', '--input_path', required=False, action="store", help='Path to input file/folder')
     parser.add_argument('-p', '--artifact_paths', required=False, action="store_true", help='Text file list of artifact paths')
