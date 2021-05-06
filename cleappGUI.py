@@ -50,8 +50,12 @@ def ValidateInput(values, window):
     return True, ext_type
 
 # initialize CheckBox control with module name   
-def CheckList(mtxt, lkey, mdstring):
-    return [sg.CBox(mtxt, default=True, key=lkey, metadata=mdstring)]
+def CheckList(mtxt, lkey, mdstring, disable=False):
+    if mdstring == 'test1' or mdstring == 'test2' : #items in the if are modules that take a long time to run. Deselects them by default.
+        dstate = False
+    else:
+        dstate = True
+    return [sg.CBox(mtxt, default=dstate, key=lkey, metadata=mdstring, disabled=disable)]
 
 def pickModules():
     global indx
@@ -67,7 +71,7 @@ def pickModules():
         mlist.append( CheckList(val[0] + f' [{key}]', indx, key) )
         indx = indx + 1
         
-sg.theme('LightGreen5')   # Add a touch of color
+sg.theme('DarkTeal9')   # Add a touch of color
 # All the stuff inside your window.
 
 normal_font = ("Helvetica", 12)

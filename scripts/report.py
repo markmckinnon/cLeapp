@@ -25,6 +25,7 @@ def get_icon_name(category, artifact):
     elif category == 'ADB HOSTS':       icon = 'terminal'
     elif category == 'APP INTERACTION': icon = 'bar-chart-2'
     elif category == 'BASH HISTORY':    icon = 'terminal'
+    elif category == 'BROWSER':    icon = 'chrome'
     elif category == 'BATTERY':         icon = 'battery-charging'
     elif category == 'CAST':            icon = 'cast'
     elif category == 'CALL LOGS':       icon = 'phone'
@@ -39,31 +40,63 @@ def get_icon_name(category, artifact):
         elif artifact.find('TOP SITES') >= 0:       icon = 'list'
         elif artifact.find('OFFLINE PAGES') >= 0:   icon = 'cloud-off'
         else:                                       icon = 'chrome'
+    elif category == 'CONTACTS':    icon = 'users'
+    elif category == 'DUO':     
+        if artifact == 'DUO CONTACTS':              icon = 'users'
+        else:                                       icon = 'message-square'
+    elif category == 'LOGS':     icon = 'book'
     elif category == 'DEVICE INFO':     
         if artifact == 'BUILD INFO':                icon = 'terminal'
         elif artifact == 'PARTNER SETTINGS':        icon = 'settings'
         elif artifact.find('SETTINGS_SECURE_') >= 0: icon = 'settings'
         else:                                       icon = 'info'
     elif category == 'ETC HOSTS':       icon = 'globe'
+    elif category == 'RDP':       icon = 'monitor'
     elif category == 'EMULATED STORAGE METADATA':     icon = 'database'
     elif category == 'FACEBOOK MESSENGER':      icon = 'facebook'
+    elif category == 'SETTINGS':         icon = 'settings'
+    elif category == 'PREFERENCES':         icon = 'settings'
     elif category == 'GBOARD KEYBOARD': icon = 'edit-3'
+    elif category == 'QUICKEDIT': icon = 'edit'
     elif category == 'GOOGLE DOCS':     icon = 'file'
     elif category == 'GOOGLE NOW & QUICKSEARCH': icon = 'search'
     elif category == 'GOOGLE PLAY':     
         if artifact == 'GOOGLE PLAY SEARCHES':      icon = 'search'
         else:                                       icon = 'play'
+    elif category == 'ANDROID GMS':  icon = 'database'
+    elif category == 'TEAMS':
+        if artifact == 'TEAMS MESSAGES':  icon = 'message-circle'
+        elif artifact == 'TEAMS USERS':  icon = 'users'
+        elif artifact == 'TEAMS CALL LOG':  icon = 'phone'
+        elif artifact == 'TEAMS ACTIVITY FEED':  icon = 'at-sign'
+        elif artifact == 'TEAMS FILE INFO':  icon = 'file'
+        else:                           icon = 'file-text'
+    elif category == 'SKYPE':
+        if artifact == 'SKYPE - LOCAL ADDRESS BOOK CONTACTS':  icon = 'users'
+        else:                               icon = 'corner-down-right'
+    elif category == 'TIKTOK':
+        if artifact == 'TIKTOK - USERS':  icon = 'users'
+        else:                               icon = 'corner-down-right'
+    elif category == 'INSTAGRAM':
+        if artifact == 'INSTAGRAM USERS':  icon = 'users'
+        else:                               icon = 'instagram'
+    elif category == 'GOOGLEDOCS':
+        if 'SHEETS' in artifact:  icon = 'bar-chart-2'
+        else:                               icon = 'align-left'
     elif category == 'INSTALLED APPS':  icon = 'package'
     elif category == 'MEDIA METADATA':  icon = 'file-plus'
     elif category == 'NOW PLAYING':           icon = 'music'
     elif category == 'RCS CHATS':       icon = 'message-circle'
+    elif category == 'DOWNLOADS':       icon = 'download'
+    elif category == 'LEVELDB':       icon = 'database'
+    elif category == 'VPN':       icon = 'shield'
     elif category == 'RECENT ACTIVITY': icon = 'activity'
     elif category == 'SAMSUNG_CMH':     icon = 'disc'
     elif category == 'SCRIPT LOGS':     icon = 'archive'
     elif category == 'SMS & MMS':       icon = 'message-square'
     elif category == 'SQLITE JOURNALING': icon = 'book-open'
     elif category == 'USAGE STATS':     icon = 'bar-chart-2'
-    elif category == 'USER DICTIONARY': icon = 'book'
+    elif category == 'USER SETTINGS': icon = 'book'
     elif category == 'WELLBEING' or category == 'WELLBEING ACCOUNT': 
         if artifact == 'ACCOUNT DATA':  icon = 'user'
         else:                           icon = 'layers'
@@ -76,6 +109,7 @@ def get_icon_name(category, artifact):
     elif category == 'TIKTOK':
         if artifact == 'MESSAGES':  icon = 'message-square'
         if artifact == 'CONTACTS':  icon = 'user'
+    elif category == 'VITAL PRODUCT DATA':         icon = 'settings'
     return icon
     
 def generate_report(reportfolderbase, time_in_secs, time_HMS, extraction_type, image_input_path):
@@ -101,6 +135,7 @@ def generate_report(reportfolderbase, time_in_secs, time_HMS, extraction_type, i
     side_list = OrderedDict() # { Category1 : [path1, path2, ..], Cat2:[..] } Dictionary containing paths as values, key=category
 
     for root, dirs, files in sorted(os.walk(reportfolderbase)):
+        files = sorted(files)
         for file in files:
             if file.endswith(".temphtml"):    
                 fullpath = (os.path.join(root, file))
@@ -185,14 +220,19 @@ def create_index_html(reportfolderbase, time_in_secs, time_HMS, extraction_type,
     """
 
     # Get script run log (this will be tab2)
+    devinfo_files_path = os.path.join(reportfolderbase, 'Script Logs', 'DeviceInfo.html')
+    tab2_content = get_file_content(devinfo_files_path)
+
+    # Get script run log (this will be tab3)
     script_log_path = os.path.join(reportfolderbase, 'Script Logs', 'Screen Output.html')
-    tab2_content = get_file_content(script_log_path)
+    tab3_content = get_file_content(script_log_path)
 
     # Get processed files list (this will be tab3)
     processed_files_path = os.path.join(reportfolderbase, 'Script Logs', 'ProcessedFilesLog.html')
-    tab3_content = get_file_content(processed_files_path)
+    tab4_content = get_file_content(processed_files_path)
 
-    content += tabs_code.format(tab1_content, tab2_content, tab3_content)
+    content += tabs_code.format(tab1_content, tab2_content, tab3_content, tab4_content)
+    
 
     content += '</div>' # CARD end
 
@@ -287,4 +327,5 @@ def mark_item_active(data, itemname):
     else:
         ret = data[0 : pos] + " active" + data[pos:]
         return ret
+    
     

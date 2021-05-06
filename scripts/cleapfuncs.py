@@ -6,12 +6,11 @@ import pathlib
 import re
 import sqlite3
 import sys
+from bs4 import BeautifulSoup
 try:
     import simplekml
 except:
     pass
-
-from bs4 import BeautifulSoup
 
 class OutputParameters:
     '''Defines the parameters that are common for '''
@@ -25,7 +24,7 @@ class OutputParameters:
         self.report_folder_base = os.path.join(output_folder, 'CLEAPP_Reports_' + currenttime) # cleapp , cleappGUI, cleap_artifacts, report.py
         self.temp_folder = os.path.join(self.report_folder_base, 'temp')
         OutputParameters.screen_output_file_path = os.path.join(self.report_folder_base, 'Script Logs', 'Screen Output.html')
-
+        OutputParameters.screen_output_file_path_devinfo = os.path.join(self.report_folder_base, 'Script Logs', 'DeviceInfo.html')
         os.makedirs(os.path.join(self.report_folder_base, 'Script Logs'))
         os.makedirs(self.temp_folder)
 
@@ -91,7 +90,7 @@ def does_column_exist_in_db(db, table_name, col_name):
             if row['name'].lower() == col_name:
                 return True
     except sqlite3.Error as ex:
-        print(f"Query error, query={query} Error={str(ex)}")
+        logfunc(f"Query error, query={query} Error={str(ex)}")
         pass
     return False
 
@@ -102,7 +101,7 @@ def does_table_exist(db, table_name):
         cursor = db.execute(query)
         for row in cursor:
             return True
-    except sqlite3Error as ex:
+    except sqlite3.Error as ex:
         logfunc(f"Query error, query={query} Error={str(ex)}")
     return False
 
@@ -124,7 +123,11 @@ def logfunc(message=""):
 
     if GuiWindow.window_handle:
         GuiWindow.window_handle.refresh()
-    
+        
+def logdevinfo(message=""):
+    with open(OutputParameters.screen_output_file_path_devinfo, 'a', encoding='utf8') as b:
+        b.write(message + '<br>' + OutputParameters.nl)
+        
 """ def deviceinfoin(ordes, kas, vas, sources): # unused function
     sources = str(sources)
     db = sqlite3.connect(reportfolderbase+'Device Info/di.db')
@@ -185,7 +188,7 @@ def tsv(report_folder, data_headers, data_list, tsvname, source_file=None):
         os.makedirs(tsv_report_folder)
 
     if os.path.exists(os.path.join(tsv_report_folder, tsvname +'.tsv')):
-        with codecs.open(os.path.join(tsv_report_folder, tsvname +'.tsv'), 'a') as tsvfile:
+        with codecs.open(os.path.join(tsv_report_folder, tsvname +'.tsv'), 'a', 'utf-8') as tsvfile:
             tsv_writer = csv.writer(tsvfile, delimiter='\t')
             for i in data_list:
                 if source_file == None:
@@ -289,16 +292,120 @@ def kmlgen(report_folder, kmlactivity, data_list, data_headers):
     db.commit()
     db.close()
     kml.save(os.path.join(kml_report_folder, f'{kmlactivity}.kml'))
+
+def usergen(report_folder, data_list_usernames):
+    report_folder = report_folder.rstrip('/')
+    report_folder = report_folder.rstrip('\\')
+    report_folder_base, tail = os.path.split(report_folder)
+    udb_report_folder = os.path.join(report_folder_base, '_Usernames DB')
     
-def get_browser_name(file_name):
-
-    if 'microsoft' in file_name.lower():
-        return 'Edge'
-    elif 'chrome' in file_name.lower():
-        return 'Chrome'
-    elif 'opera' in file_name.lower():
-        return 'Opera'
+    if os.path.isdir(udb_report_folder):
+        usernames = os.path.join(udb_report_folder, '_usernames.db')
+        db = sqlite3.connect(usernames)
+        cursor = db.cursor()
+        cursor.execute('''PRAGMA synchronous = EXTRA''')
+        cursor.execute('''PRAGMA journal_mode = WAL''')
+        db.commit()
     else:
-        return 'Unknown'
+        os.makedirs(udb_report_folder)
+        usernames = os.path.join(udb_report_folder, '_usernames.db')
+        db = sqlite3.connect(usernames)
+        cursor = db.cursor()
+        cursor.execute(
+        """
+        CREATE TABLE data(username TEXT, appname TEXT, data TEXT)
+        """
+            )
+        db.commit()
+    
+    a = 0
+    length = (len(data_list_usernames))
+    while a < length:
+        user = data_list_usernames[a][0]
+        app = data_list_usernames[a][1]
+        data = data_list_usernames[a][2]
+        cursor.execute("INSERT INTO data VALUES(?,?,?)", (user, app, data))
+        a += 1
+    db.commit()
+    db.close()
+    
 
+def get_browser_name(file_name):
+    if 'com.brave.browser' in file_name.lower():
+        return 'Brave'
+    elif 'com.opera.browser' in file_name.lower():
+        return 'Opera'
+    elif 'com.duckduckgo.mobile.android' in file_name.lower():
+        return 'Duck Duck Go'
+    else:
+        return 'Chromebook'
 
+def get_ldb_records(ldb_path, prefix=''):
+    """Open a LevelDB at given path and return a list of records, optionally
+    filtered by a prefix string. Key and value are kept as byte strings.
+    This code was taken from the file utils.py from Ryan Benson's Hindsight project"""
+
+    try:
+        from scripts.lib.ccl_chrome_indexeddb import ccl_leveldb
+    except ImportError as err:
+        logfunc (str(err))
+        logfunc (str(f' - Failed to import ccl_leveldb; unable to process {ldb_path}'))
+        return []
+
+    # The ldb key and value are both bytearrays, so the prefix must be too. We allow
+    # passing the prefix into this function as a string for convenience.
+    if isinstance(prefix, str):
+        prefix = prefix.encode()
+
+    try:
+        db = ccl_leveldb.RawLevelDb(ldb_path)
+    except Exception as e:
+        logfunc (str(f' - Could not open {ldb_path} as LevelDB; {e}'))
+        return []
+
+    cleaned_records = []
+
+    try:
+        for record in db.iterate_records_raw():
+            cleaned_record = record.__dict__
+
+            if record.file_type.name == 'Ldb':
+                cleaned_record['key'] = record.key[:-8]
+
+            if cleaned_record['key'].startswith(prefix):
+                cleaned_record['key'] = cleaned_record['key'][len(prefix):]
+                cleaned_record['state'] = cleaned_record['state'].name
+                cleaned_record['file_type'] = cleaned_record['file_type'].name
+
+                cleaned_records.append(cleaned_record)
+
+    except ValueError:
+        logfunc (str(f' - Exception reading LevelDB: ValueError'))
+
+    except Exception as e:
+        logfunc (str(f' - Exception reading LevelDB: {e}'))
+
+    db.close()
+    return cleaned_records
+
+def read_varint(source):
+    ''' This code was taken from the file utils.py from Ryan Benson's Hindsight project '''
+    result = 0
+    bytes_used = 0
+    for read in source:
+        result |= ((read & 0x7F) << (bytes_used * 7))
+        bytes_used += 1
+        if (read & 0x80) != 0x80:
+            return result, bytes_used
+
+def clean_up_br(data_list):
+    item_cleaned = []
+    clean_list = []
+    for s in data_list:
+        for t in s:
+            t=str(t)
+            t = (t.replace("<br>", ""))
+            item_cleaned.append(t) 
+        clean_list.append(item_cleaned)
+        item_cleaned =[]
+    return clean_list    
