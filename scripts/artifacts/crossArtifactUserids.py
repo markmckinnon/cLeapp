@@ -5,7 +5,7 @@ import os
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.cleapfuncs import logfunc, tsv, timeline, is_platform_windows, open_sqlite_db_readonly, usergen
 
-def get_crossArtifactContact(files_found, report_folder, seeker, wrap_text):
+def get_crossArtifactUserids(files_found, report_folder, seeker, wrap_text):
 
     report_folder = report_folder.rstrip('/')
     report_folder = report_folder.rstrip('\\')
@@ -22,8 +22,8 @@ def get_crossArtifactContact(files_found, report_folder, seeker, wrap_text):
     all_rows = cursor.fetchall()
     usageentries = len(all_rows)
     if usageentries > 0:
-        report = ArtifactHtmlReport('Cross Artifact Contacts')
-        report.start_artifact_report(report_folder, 'Cross Artifact Contacts')
+        report = ArtifactHtmlReport('Cross Artifact Userids')
+        report.start_artifact_report(report_folder, 'Cross Artifact Userids')
         report.add_script()
         data_headers = ('user_name', 'app_name', 'artifact reference', 'other user information')
         data_list_html = []
@@ -34,14 +34,14 @@ def get_crossArtifactContact(files_found, report_folder, seeker, wrap_text):
         report.write_artifact_data_table(data_headers, data_list_html, udb_database_file, html_escape=False)
         report.end_artifact_report()
 
-        tsvname = f'Cross Artifact Contacts'
+        tsvname = f'Cross Artifact Userids'
         tsv(report_folder, data_headers, data_list, tsvname)
 
-        tlactivity = f'Cross Artifact Contacts'
+        tlactivity = f'Cross Artifact Userids'
         timeline(report_folder, tlactivity, data_list, data_headers)
 
     else:
-        logfunc('No Cross Artifact Contacts data available')
+        logfunc('No Cross Artifact Userids data available')
 
     db.close()
         
