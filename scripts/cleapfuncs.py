@@ -398,4 +398,14 @@ def read_varint(source):
         if (read & 0x80) != 0x80:
             return result, bytes_used
 
-    
+def clean_up_br(data_list):
+    item_cleaned = []
+    clean_list = []
+    for s in data_list:
+        for t in s:
+            t=str(t)
+            t = (t.replace("<br>", ""))
+            item_cleaned.append(t) 
+        clean_list.append(item_cleaned)
+        item_cleaned =[]
+    return clean_list    
