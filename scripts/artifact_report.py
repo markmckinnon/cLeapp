@@ -19,6 +19,7 @@ class ArtifactHtmlReport:
 
     def start_artifact_report(self, report_folder, artifact_file_name, artifact_description=''):
         '''Creates the report HTML file and writes the artifact name as a heading'''
+        self.report_file_path = os.path.join(os.path.split(report_folder.rstrip('\\'))[0], f'{artifact_file_name}.html')
         self.report_file = open(os.path.join(report_folder, f'{artifact_file_name}.temphtml'), 'w', encoding='utf8')
         self.report_file.write(page_header.format(f'CLEAPP - {self.artifact_name} report'))
         self.report_file.write(body_start.format(f'CLEAPP {cleapp_version}'))
@@ -36,6 +37,10 @@ class ArtifactHtmlReport:
             self.script_code += script + nav_bar_script_footer
         else:
             self.script_code += default_responsive_table_script + nav_bar_script_footer
+
+    def get_report_file_path(self):
+        '''returns the html report name'''
+        return self.report_file_path
 
     def write_artifact_data_table(self, data_headers, data_list, source_path, 
             write_total=True, write_location=True, html_escape=True, cols_repeated_at_bottom=True,
@@ -126,5 +131,6 @@ class ArtifactHtmlReport:
             self.report_file.write(body_main_trailer + body_end + self.script_code + page_footer)
             self.report_file.close()
             self.report_file = None
+            self.report_file_path = None
 
             

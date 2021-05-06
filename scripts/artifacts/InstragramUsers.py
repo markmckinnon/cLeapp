@@ -15,7 +15,7 @@ def get_instragramUsers(files_found, report_folder, seeker, wrap_text):
     for file_found in files_found:
         
         file_name = str(file_found)
-        if ('wal' in file_name.lower() and ('shm') in file_name.lower()):
+        if (file_name.lower().endswith('-wal') or file_name.lower().endswith('-shm') or file_name.lower().endswith('-journal')):
             continue
         elif (file_name.lower().endswith('cookies')):
             get_appCookies(file_found, report_folder, seeker, wrap_text, "Instragram")
