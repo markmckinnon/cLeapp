@@ -67,8 +67,6 @@ def get_instragramUsers(files_found, report_folder, seeker, wrap_text):
             tsvname = 'Instagram Users'
             tsv(report_folder, data_headers, data_list, tsvname)
             
-            tlactivity = 'Instagram Users'
-            timeline(report_folder, tlactivity, data_list, data_headers)
         
         if file_found.endswith('direct.db'):
             cursor = db.cursor()

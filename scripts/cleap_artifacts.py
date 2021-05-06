@@ -23,6 +23,7 @@ from scripts.artifacts.chromeTopSites import get_chromeTopSites
 from scripts.artifacts.chromeWebsearch import get_chromeWebsearch
 from scripts.artifacts.chromeNetworkActionPredictor import get_chromeNetworkActionPredictor
 from scripts.artifacts.customDict import get_customDict
+from scripts.artifacts.duo import get_duo
 from scripts.artifacts.providerDownloader import get_providerDownloaders
 from scripts.artifacts.eventlog import get_eventlog
 from scripts.artifacts.favicons import get_favicons
@@ -77,6 +78,7 @@ tosearch = {
     'chromeNetworkActionPredictor':('Browser', ('*/mount/user/Network Action Predictor*','*/chronos/LockScreenAppsProfile/Network Action Predictor*', '*/chronos/Default/Network Action Predicator*', '**/com.brave.browser/app_chrome/Default/Network Action Predicator*')),
     'chromeOmnibox':('Browser', ('*/mount/user/Shortcuts*','*/chronos/LockScreenAppsProfile/Shortcuts*', '*/chronos/Default/Shortcuts*', '**/com.brave.browser/app_chrome/Default/Shortcuts*')),
     'customDict':('User Settings', '*/mount/user/Custom Dictionary.txt'),
+    'duo':('Duo', '*/com.google.android.apps.tachyon/databases/tachyon.db*'),
     'eventlog':('Logs', '*/var/log/eventlog.txt'),
     'favicons':('Browser', ('*/mount/user/Favicons*','*/chronos/LockScreenAppsProfile/Favicons*', '*/chronos/Default/Favicons*')),
     'fsData':('Settings', '*/filesystem-details.txt'),
