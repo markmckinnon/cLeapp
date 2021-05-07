@@ -62,15 +62,15 @@ from scripts.cleapfuncs import *
 # For example: If modulename='profit', function name must be get_profit(..)
 # Don't forget to import the module above!!!!
 
-tosearch_takeout = {
-    'reminders_takeout': ('Reminders', '**/Reminders/Reminders.html', '**/DSCN22*'),
-}
-
+# These are external databases that are created during the run of cLeapp that we want to add into
+# after everything has been processed.  The file it looks for is used as a place holder to make the logic
+# work, this file should always be present in a ChromeOs system
 to_search_external_dbs = {
     'crossArtifactUserids': ('Cross Artifacts', '**/mount/user/.bash_profile'),
-    'crossArtifactTimeline': ('Cross Artifacts', '**/mount/user/.bash_profile')
-
+    'crossArtifactTimeline': ('Cross Artifacts', '**/mount/user/.bash_profile'),
 }
+
+# These are all the artifacts that need to be processed from a ChromeOs
 tosearch_cLeapp = {
 # Accounts
     'accounts_ce': ('Accounts', '**/system_ce/*/accounts_ce.db'),
@@ -121,7 +121,6 @@ tosearch_cLeapp = {
 
 # This is the order the artifacts must be processed.
 tosearch = dict(tosearch_cLeapp)
-tosearch.update(tosearch_takeout)
 tosearch.update(to_search_external_dbs)
 
 slash = '\\' if is_platform_windows() else '/'
