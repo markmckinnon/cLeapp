@@ -41,6 +41,8 @@ def get_icon_name(category, artifact):
         elif artifact.find('OFFLINE PAGES') >= 0:   icon = 'cloud-off'
         else:                                       icon = 'chrome'
     elif category == 'CONTACTS':    icon = 'users'
+    elif category == 'CROSH COMMANDS': icon = 'command'
+    elif category == 'LINUX VIRTUAL MACHINE': icon = 'hard-drive'
     elif category == 'CROSS ARTIFACTS':
         if artifact == 'CROSS ARTIFACT USERIDS': icon = 'users'
         elif artifact == 'CROSS ARTIFACT TIMELINE': icon = 'clock'
