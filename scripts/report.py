@@ -66,7 +66,6 @@ def get_icon_name(category, artifact):
     elif category == 'GOOGLE PLAY':     
         if artifact == 'GOOGLE PLAY SEARCHES':      icon = 'search'
         else:                                       icon = 'play'
-    elif category == 'TAKEOUT': icon = 'download-cloud'
     elif category == 'ANDROID GMS':  icon = 'database'
     elif category == 'TEAMS':
         if artifact == 'TEAMS MESSAGES':  icon = 'message-circle'
