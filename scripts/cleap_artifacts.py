@@ -50,8 +50,6 @@ from scripts.artifacts.quickedit import get_quickedit
 from scripts.artifacts.googleDocs import get_googleDocs
 from scripts.artifacts.chromeSync import get_chromeSync
 from scripts.artifacts.crossArtifactUserids import get_crossArtifactUserids
-from scripts.artifacts.crossArtifactTimeline import get_crossArtifactTimeline
-from scripts.artifacts.reminders_takeout import get_reminders_takeout
 
 from scripts.cleapfuncs import *
 
@@ -62,16 +60,7 @@ from scripts.cleapfuncs import *
 # For example: If modulename='profit', function name must be get_profit(..)
 # Don't forget to import the module above!!!!
 
-tosearch_takeout = {
-    'reminders_takeout': ('Reminders', '**/Reminders/Reminders.html', '**/DSCN22*'),
-}
-
-to_search_external_dbs = {
-    'crossArtifactUserids': ('Cross Artifacts', '**/mount/user/.bash_profile'),
-    'crossArtifactTimeline': ('Cross Artifacts', '**/mount/user/.bash_profile')
-
-}
-tosearch_cLeapp = {
+tosearch = {
 # Accounts
     'accounts_ce': ('Accounts', '**/system_ce/*/accounts_ce.db'),
 #    'accounts_ce_authtokens':('Accounts', '**/accounts_ce.db'),
@@ -117,12 +106,10 @@ tosearch_cLeapp = {
     'quickedit': ('QuickEdit', ('**/com.rhmsoft.edit/databases/edit.db*', '**/com.zhiliaoapp.musically/app_webview/Cookies*')),
     'googleDocs':('GoogleDocs', ('**/com.google.android.apps.docs.editors.*/databases/Storage.db*', '**/com.google.android.apps.docs.editors.*/databases/DocList.db*')),
     'chromeSync':('Synced Users', '**/com.google.android.gms/databases/chromesync.data_store*'),
+    # This must always be the last artifact to run.  Dummy file used as a place holder that should always be there
+    # in the image.  Needed a file to make sure this artifact will be generated.
+    'crossArtifactUserids':('Cross Artifact Userids', '**/mount/user/.bash_profile')
 }
-
-# This is the order the artifacts must be processed.
-tosearch = dict(tosearch_cLeapp)
-tosearch.update(tosearch_takeout)
-tosearch.update(to_search_external_dbs)
 
 slash = '\\' if is_platform_windows() else '/'
 

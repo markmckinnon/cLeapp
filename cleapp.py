@@ -6,7 +6,6 @@ import shutil
 import traceback
 
 from scripts.search_files import *
-from scripts.artifact_report import ArtifactHtmlReport
 from scripts.cleapfuncs import *
 from scripts.cleap_artifacts import *
 from scripts.version_info import cleapp_version
@@ -14,13 +13,12 @@ from time import process_time, gmtime, strftime
 
 def main():
     parser = argparse.ArgumentParser(description='CLEAPP: Chrome Logs, Events, and Protobuf Parser.')
-    parser.add_argument('-t', choices=['fs','tar','zip', 'gz', 'tgz', 'takeout'], required=False, type=str.lower, action="store", help="Input type (fs = extracted to file system folder)")
+    parser.add_argument('-t', choices=['fs','tar','zip', 'gz', 'tgz'], required=False, type=str.lower, action="store", help="Input type (fs = extracted to file system folder)")
     parser.add_argument('-o', '--output_path', required=False, action="store", help='Output folder path')
     parser.add_argument('-i', '--input_path', required=False, action="store", help='Path to input file/folder')
     parser.add_argument('-p', '--artifact_paths', required=False, action="store_true", help='Text file list of artifact paths')
     parser.add_argument('-w', '--wrap_text', required=False, action="store_false", help='do not wrap text for output of data files')
-    parser.add_argument('-gto', '--google_takeout', required=False, action="store", help='Directory where the takeout files are stored')
-
+        
     args = parser.parse_args()
     
     if args.artifact_paths == True:
@@ -37,7 +35,6 @@ def main():
         return
 
     else:
-        takeout_path = args.google_takeout
         input_path = args.input_path
         extracttype = args.t
 
@@ -60,16 +57,6 @@ def main():
             parser.error('No INPUT file or folder selected. Run the program again.')
             return
         
-        if args.t == 'takout' and not os.path.isdir(input_path):
-            parser.error('Takeout input must be a directory. Run the program again.')
-            return
-
-        if args.google_takeout != None and not os.path.isdir(args.google_takeout):
-            parser.error('When using takeout option must specify a directory where takeout files reside. Run the program again')
-            return
-
-        google_takeout_dir = args.google_takeout
-
         if args.t == None:
             parser.error('No INPUT file or folder selected. Run the program again.')
             return
@@ -80,7 +67,7 @@ def main():
         
         if not os.path.exists(output_path):
             parser.error('OUTPUT folder does not exist! Run the program again.')
-            return
+            return  
 
         # File system extractions can contain paths > 260 char, which causes problems
         # This fixes the problem by prefixing \\?\ on each windows path.
@@ -90,9 +77,9 @@ def main():
 
         out_params = OutputParameters(output_path)
 
-        crunch_artifacts(tosearch, extracttype, input_path, out_params, 1, wrap_text, google_takeout_dir)
+        crunch_artifacts(tosearch, extracttype, input_path, out_params, 1, wrap_text)
 
-def crunch_artifacts(search_list, extracttype, input_path, out_params, ratio, wrap_text, google_takeout_dir):
+def crunch_artifacts(search_list, extracttype, input_path, out_params, ratio, wrap_text):
     start = process_time()
 
     logfunc('Processing started. Please wait. This may take a few minutes...')
@@ -109,21 +96,13 @@ def crunch_artifacts(search_list, extracttype, input_path, out_params, ratio, wr
     try:
         if extracttype == 'fs':
             seeker = FileSeekerDir(input_path)
-            if google_takeout_dir != None:
-                process_google_takeout(google_takeout_dir, out_params.report_folder_base)
 
         elif extracttype in ('tar', 'gz'):
             seeker = FileSeekerTar(input_path, out_params.temp_folder)
-            if google_takeout_dir != None:
-                process_google_takeout(google_takeout_dir, out_params.report_folder_base)
 
         elif extracttype == 'zip':
             seeker = FileSeekerZip(input_path, out_params.temp_folder)
-            if google_takeout_dir != None:
-                process_google_takeout(google_takeout_dir, out_params.report_folder_base)
 
-        elif extracttype == 'takeout':
-            process_google_takeout(input_path, out_params.report_folder_base)
         else:
             logfunc('Error on argument -o (input type)')
             return False
@@ -193,16 +172,6 @@ def crunch_artifacts(search_list, extracttype, input_path, out_params, ratio, wr
     logfunc('')
     logfunc(f'Report location: {out_params.report_folder_base}')
     return True
-
-def process_google_takeout(input_path, output_path):
-    seeker = FileSeekerTakeout(input_path, output_path)
-    seeker.search("**")
-    report_to = ArtifactHtmlReport('Google Takeout', 'Google Takeout')
-    report_to.start_artifact_report(os.path.join(output_path, "Takeout"), "Google Takeout")
-    takout_html_file = os.path.join(os.path.join(output_path, "Takeout"), "archive_browser.html")
-    report_to.write_raw_html(f'<meta http-equiv="refresh" content="0; URL={takout_html_file}" />')
-    report_to.end_artifact_report()
-
 
 if __name__ == '__main__':
     main()
