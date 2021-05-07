@@ -51,7 +51,8 @@ from scripts.artifacts.googleDocs import get_googleDocs
 from scripts.artifacts.chromeSync import get_chromeSync
 from scripts.artifacts.crossArtifactUserids import get_crossArtifactUserids
 from scripts.artifacts.crossArtifactTimeline import get_crossArtifactTimeline
-from scripts.artifacts.reminders_takeout import get_reminders_takeout
+from scripts.artifacts.croshCommands import get_croshCommands
+from scripts.artifacts.LinuxVM import get_linuxVM
 
 from scripts.cleapfuncs import *
 
@@ -117,6 +118,8 @@ tosearch_cLeapp = {
     'quickedit': ('QuickEdit', ('**/com.rhmsoft.edit/databases/edit.db*', '**/com.zhiliaoapp.musically/app_webview/Cookies*')),
     'googleDocs':('GoogleDocs', ('**/com.google.android.apps.docs.editors.*/databases/Storage.db*', '**/com.google.android.apps.docs.editors.*/databases/DocList.db*')),
     'chromeSync':('Synced Users', '**/com.google.android.gms/databases/chromesync.data_store*'),
+    'croshCommands':('Crosh Commands', '**/user/.crosh_history'),
+    'linuxVM':('Linux Virtual Machine', '**/root/crosvm/*'),
 }
 
 # This is the order the artifacts must be processed.
