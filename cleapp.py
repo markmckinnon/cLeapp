@@ -96,7 +96,7 @@ def crunch_artifacts(search_list, extracttype, input_path, out_params, ratio, wr
     try:
         if extracttype == 'fs':
             seeker = FileSeekerDir(input_path)
-        elif extracttype in ('tar', 'gz'):
+        elif extracttype in ('tar', 'gz', 'tgz'):
             seeker = FileSeekerTar(input_path, out_params.temp_folder)
         elif extracttype == 'zip':
             seeker = FileSeekerZip(input_path, out_params.temp_folder)
