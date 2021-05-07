@@ -1,6 +1,7 @@
 import fnmatch
 import os
 import tarfile
+from shutil import copyfile
 
 from pathlib import Path
 from scripts.cleapfuncs import *
@@ -103,3 +104,46 @@ class FileSeekerZip(FileSeekerBase):
 
     def cleanup(self):
         self.zip_file.close()
+
+class FileSeekerTakeout(FileSeekerBase):
+    def __init__(self, directory, temp_folder):
+        FileSeekerBase.__init__(self)
+        self.directory = directory
+        self.temp_folder = temp_folder
+        self._all_files = []
+        self._file_list_type = []
+        logfunc('Building files listing...')
+        self.build_files_list(directory)
+        logfunc(f'File listing complete - {len(self._all_files)} files')
+
+    def build_files_list(self, directory):
+        '''Populates all paths in directory into _all_files'''
+        try:
+            files_list = os.scandir(directory)
+            for item in files_list:
+                #self._all_files.append(item.path)
+                if item.is_dir(follow_symlinks=False):
+                    self.build_files_list(item.path)
+                # 3 types of files to look for, zip and tgz are what Google puts out.
+                # Regular files have been spotted in folder along with zip/tgz files.
+                # What has been spotted has been mbox files
+                if ".zip" in item.name.lower():
+                    self._file_list_type.append(FileSeekerZip(item.path, self.temp_folder))
+                elif ".tgz" in item.name.lower():
+                    self._file_list_type.append(FileSeekerTar(item.path, self.temp_folder))
+                else:
+                    self._file_list_type.append(item.path)
+        except Exception as ex:
+            logfunc(f'Error reading {directory} ' + str(ex))
+
+    def search(self, filepattern, return_on_first_hit=False):
+        all_files = []
+        for item in self._file_list_type:
+            if type(item) == str:
+                if fnmatch.fnmatch(item, filepattern):
+                    copyfile(item, os.path.join(self.temp_file, os.path.split(item)[1]))
+                    all_files.append(os.path.join(self.temp_file, os.path.split(item)[1]))
+            else:
+                all_files.extend(item.search(filepattern))
+
+        return all_files
