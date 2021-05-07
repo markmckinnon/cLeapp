@@ -41,7 +41,9 @@ def get_icon_name(category, artifact):
         elif artifact.find('OFFLINE PAGES') >= 0:   icon = 'cloud-off'
         else:                                       icon = 'chrome'
     elif category == 'CONTACTS':    icon = 'users'
-    elif category == 'CROSS ARTIFACT USERIDS': icon = 'users'
+    elif category == 'CROSS ARTIFACTS':
+        if artifact == 'CROSS ARTIFACT USERIDS': icon = 'users'
+        elif artifact == 'CROSS ARTIFACT TIMELINE': icon = 'clock'
     elif category == 'DUO':     
         if artifact == 'DUO CONTACTS':              icon = 'users'
         else:                                       icon = 'message-square'
@@ -64,6 +66,7 @@ def get_icon_name(category, artifact):
     elif category == 'GOOGLE PLAY':     
         if artifact == 'GOOGLE PLAY SEARCHES':      icon = 'search'
         else:                                       icon = 'play'
+    elif category == 'TAKEOUT': icon = 'download-cloud'
     elif category == 'ANDROID GMS':  icon = 'database'
     elif category == 'TEAMS':
         if artifact == 'TEAMS MESSAGES':  icon = 'message-circle'
