@@ -27,7 +27,7 @@ def ValidateInput(values, window):
     elif os.path.isdir(i_path):
         ext_type = 'fs'
     else: # must be an existing file then
-        if not i_path.lower().endswith('.tar') and not i_path.lower().endswith('.zip') and not i_path.lower().endswith('.gz'):
+        if not i_path.lower().endswith('.tar') and not i_path.lower().endswith('.zip') and not i_path.lower().endswith('.gz') and not i_path.lower().endswith('.tgz'):
             sg.PopupError('Input file is not a supported archive! ', i_path)
             return False, ext_type
         else:
