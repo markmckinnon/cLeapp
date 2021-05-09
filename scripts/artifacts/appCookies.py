@@ -73,6 +73,6 @@ def get_appCookies(file_found, report_folder, seeker, wrap_text, app_name):
 
         tlactivity = f'{browser_name} Cookies'
         timeline(report_folder, tlactivity, data_list, data_headers)
-    
+
 
     db.close()
