@@ -14,3 +14,6 @@ scripts/.DS_Store
 .idea/inspectionProfiles/Project_Default.xml
 .idea/inspectionProfiles/profiles_settings.xml
 .idea/cLeapp.iml
+dist/cLeapp-1.0-Executables
+dist/cleapp.exe
+dist/cleappGUI.exe
