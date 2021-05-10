@@ -14,16 +14,16 @@ def get_msRDP(files_found, report_folder, seeker, wrap_text):
         db = open_sqlite_db_readonly(file_found)
         cursor = db.cursor()
         cursor.execute('''
-        select  
-        username,
-        password,
-        servername,
-        servername_friendly,
-        screenshot_table_id,
-        screenshot_data
-        from credential_table, connection_table, screenshot_table
-        where credential_table.credential_table_id = connection_table.credential_id
-        and screenshot_table.screenshot_table_id = connection_table.connection_table_id 
+            select  
+            username,
+            password,
+            servername,
+            servername_friendly,
+            screenshot_table_id,
+            screenshot_data
+            from credential_table, connection_table, screenshot_table
+            where credential_table.credential_table_id = connection_table.credential_id
+            and screenshot_table.screenshot_table_id = connection_table.connection_table_id 
         ''')
         
         all_rows = cursor.fetchall()
@@ -36,7 +36,7 @@ def get_msRDP(files_found, report_folder, seeker, wrap_text):
             for row in all_rows:
                 blob = row[5]
                 blobid = row[4]
-                writtento = f'{report_folder}/{blobid}.png'
+                writtento = os.path.join(report_folder,blobid + '.png')
                 with open(f'{writtento}', 'wb') as file:
                     file.write(blob)
                 blob_location = f'<a href="{writtento}"><img src="{writtento}"></a>'
