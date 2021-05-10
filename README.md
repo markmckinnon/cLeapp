@@ -1,7 +1,7 @@
 # cLEAPP
 Chrome Logs Events and Protobuf Parser
 
-Details in blog post here:   
+Details in blog post here:  https://abrignoni.blogspot.com/2021/05/cleapp-it-chromeos-logs-events-and.html 
 
 ## Requirements
 **Python 3.9 or above** (older versions of 3.x will also work with the exception of one or two modules)
