@@ -14,7 +14,7 @@ from scripts.artifacts.Cast import get_Cast
 from scripts.artifacts.chrome import get_chrome
 from scripts.artifacts.chromeDownloads import get_chromeDownloads
 from scripts.artifacts.chromeCookies import get_chromeCookies
-#from scripts.artifacts.chromeAutofill import get_chromeAutofill
+from scripts.artifacts.chromeAutofill import get_chromeAutofill
 from scripts.artifacts.chromeLoginData import get_chromeLoginData
 from scripts.artifacts.chromeBookmarks import get_chromeBookmarks
 from scripts.artifacts.chromeOmnibox import get_chromeOmnibox
@@ -83,7 +83,7 @@ tosearch_cLeapp = {
     'chromeDownloads':('Browser', ('**/mount/user/History*', '**/chronos/LockScreenAppsProfile/History*', '**/chronos/Default/History*', '**/com.brave.browser/app_chrome/Default/History*', '**/com.opera.browser/app_opera/History*')),
     'chromeCookies':('Browser', ('**/mount/user/Cookies*',  '**/chronos/LockScreenAppsProfile/Cookies*', '**/chronos/Default/Cookies*', '**/com.brave.browser/app_chrome/Default/Cookies*', '**/com.opera.browser/app_opera/Cookies*')),
     'chromeLoginData':('Browser', ('**/mount/user/Login Data*', '**/chronos/LockScreenAppsProfile/Login Data*', '**/chronos/Default/Login Data*', '**/com.brave.browser/app_chrome/Default/Login Data*', '**/com.opera.browser/app_opera/Login Data*')),
-#    'chromeAutofill':('Browser', ('**/mount/user/Web Data*', '**/chronos/LockScreenAppsProfile/Web Data*', '**/chronos/Default/Web Data*', '**/com.brave.browser/app_chrome/Default/Web Data*')),
+    'chromeAutofill':('Browser', ('**/mount/user/Web Data*', '**/chronos/LockScreenAppsProfile/Web Data*', '**/chronos/Default/Web Data*', '**/com.brave.browser/app_chrome/Default/Web Data*')),
     'chromeSearchTerms':('Browser', ('**/mount/user/History*', '**/chronos/LockScreenAppsProfile/History*', '**/chronos/Default/History*', '**/com.brave.browser/app_chrome/Default/History*', '**/com.opera.browser/app_opera/History*')),
     'chromeWebsearch':('Browser', ('**/mount/user/History*', '**/chronos/LockScreenAppsProfile/History*', '**/chronos/Default/History*', '**/com.brave.browser/app_chrome/Default/History*', '**/com.opera.browser/app_opera/History*')),
 #   'chromium_bookmarks':('Browser', '**/mount/user/Bookmarks'),
