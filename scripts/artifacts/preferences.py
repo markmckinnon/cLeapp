@@ -18,6 +18,7 @@ def get_preferences(files_found, report_folder, seeker, wrap_text):
     arc_data_list =[]
     apps_data_list = []
     settings_list = []
+    ext_data_list = []
     
     for file_found in files_found:
         file_found = str(file_found)
@@ -26,7 +27,7 @@ def get_preferences(files_found, report_folder, seeker, wrap_text):
             data = json.load(f)
             
         for x, y in data.items():
-            #print(x)
+            
             if x == 'account_info':
                 for list in y:
                     account_id = list.get('account_id')
@@ -150,6 +151,65 @@ def get_preferences(files_found, report_folder, seeker, wrap_text):
                 logdevinfo(f'Last Chrome Version: {last_chrome_version}')
                 settings_list.append(('last_chrome_version', last_chrome_version ))
                 
+                for i in data['extensions']['settings']:
+                    
+                    ext_id = i
+                
+                    if 'install_time' in data['extensions']['settings'][i]:
+                        install_time = data['extensions']['settings'][i].get('install_time','')
+                        install_time_formatted = datetime.datetime.utcfromtimestamp((int(install_time)/1000000) - 11644473600).strftime('%Y-%m-%d %H:%M:%S')
+                    else:
+                        install_time_formatted = ''
+                    
+                    if 'manifest' in data['extensions']['settings'][i]:
+                        ext_name = data['extensions']['settings'][i]['manifest'].get('name','')
+                        ext_description = data['extensions']['settings'][i]['manifest'].get('description','')
+                        ext_version = data['extensions']['settings'][i]['manifest'].get('version','')
+                        ext_author = data['extensions']['settings'][i]['manifest'].get('author','')
+                        ext_homepage = data['extensions']['settings'][i]['manifest'].get('homepage_url','')
+                        ext_permissions = data['extensions']['settings'][i]['manifest'].get('permissions','')
+                    else:
+                        ext_name = ''
+                        ext_description = ''
+                        ext_version = ''
+                        ext_author = ''
+                        ext_homepage = ''
+                        ext_permissions = ''
+                        
+                    if 'state' in data['extensions']['settings'][i]:
+                        ext_state = data['extensions']['settings'][i].get('state','')
+                        
+                        if ext_state == 0:
+                            ext_state_status = 'Disabled'
+                        elif ext_state == 1:
+                            ext_state_status = 'Enabled'
+                    
+                    if 'was_installed_by_default' in data['extensions']['settings'][i]:
+                        was_installed_by_default = str(data['extensions']['settings'][i].get('was_installed_by_default',''))
+                        was_installed_by_default = was_installed_by_default.title()
+                    else:
+                        was_installed_by_default = ''
+                        
+                    if 'was_installed_by_oem' in data['extensions']['settings'][i]:
+                        was_installed_by_oem = str(data['extensions']['settings'][i].get('was_installed_by_oem',''))
+                        was_installed_by_oem = was_installed_by_oem.title()
+                    else:
+                        was_installed_by_oem = '' 
+                        
+                    if 'from_bookmark' in data['extensions']['settings'][i]:
+                        from_bookmark = str(data['extensions']['settings'][i].get('from_bookmark',''))
+                        from_bookmark = from_bookmark.title()
+                    else:
+                        from_bookmark = ''  
+                        
+                    if 'from_webstore' in data['extensions']['settings'][i]:
+                        from_webstore = str(data['extensions']['settings'][i].get('from_webstore',''))
+                        from_webstore = from_webstore.title()
+                    else:
+                        from_webstore = ''                      
+                    
+                    ext_data_list.append((install_time_formatted,ext_name,ext_description,ext_version,ext_id,ext_author,ext_homepage,ext_state_status,was_installed_by_default,was_installed_by_oem,from_bookmark,from_webstore,ext_permissions))
+                
             if x == 'google':
                 google = y
                 settings_list.append(('google', google ))
@@ -246,5 +306,19 @@ def get_preferences(files_found, report_folder, seeker, wrap_text):
         tsvname = 'Preferences'
         tsv(report_folder, data_headers, settings_list, tsvname)
         
+    if len(ext_data_list) > 0:
+        report = ArtifactHtmlReport('Extensions')
+        report.start_artifact_report(report_folder, 'Extensions')
+        report.add_script()
+        data_headers = ('Install Time','Extension Name','Description','Version','Extension ID','Author','Homepage','State','Installed by Default','Installed by OEM','From Bookmark','From Webstore','Permissions')
+        report.write_artifact_data_table(data_headers, ext_data_list, file_found, html_escape=False)
+        report.end_artifact_report()
+        
+        tsvname = 'Extensions'
+        tsv(report_folder, data_headers, ext_data_list, tsvname)
+        
+        tlactivity = 'Extensions'
+        timeline(report_folder, tlactivity, ext_data_list, data_headers)   
+        
     else:
-        logfunc('No Preferences Data available')
+        logfunc('No Preferences Extensions Data available')
