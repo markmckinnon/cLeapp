@@ -85,7 +85,7 @@ def crunch_artifacts(search_list, extracttype, input_path, out_params, ratio, wr
     logfunc('Processing started. Please wait. This may take a few minutes...')
 
     logfunc('\n--------------------------------------------------------------------------------------')
-    logfunc(f'CLEAPP v{cleapp_version}: Chrome Logs, Events, and Protobuf Parser')
+    logfunc(f'CLEAPP v{cleapp_version}: ChromeOS Logs, Events, and Protobuf Parser')
     logfunc('Objective: Triage Chrome Image Extractions.')
     logfunc('By: Mark McKinnon | @markmckinnon')
     logfunc('By: Alexis Brignoni | @AlexisBrignoni | abrignoni.com ')

@@ -1,4 +1,4 @@
-cleapp_version = '1.0.1'
+cleapp_version = '1.0.2'
 
 # Contributors List
 # Format = [ Name, Blog-url, Twitter-handle, Github-url]
