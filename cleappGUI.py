@@ -81,7 +81,7 @@ pickModules()
 GuiWindow.progress_bar_total = len(cleapp.tosearch)
 
 
-layout = [  [sg.Text('Chrome Logs, Events, And Protobuf Parser', font=("Helvetica", 22))],
+layout = [  [sg.Text('ChromeOS Logs, Events, And Protobuf Parser', font=("Helvetica", 22))],
             [sg.Text('https://github.com/markmckinnon/cLEAPP', font=("Helvetica", 14))],
             [sg.Frame(layout=[
                     [sg.Input(size=(97,1)), 
@@ -89,7 +89,7 @@ layout = [  [sg.Text('Chrome Logs, Events, And Protobuf Parser', font=("Helvetic
                      sg.FolderBrowse(font=normal_font, button_text='Browse Folder', target=(sg.ThisRow, -2), key='INPUTFOLDERBROWSE')
                     ]
                 ],
-                title='Select a file (tar/zip/gz) or directory of the target Chrome OS full file system extraction for parsing:')],
+                title='Select a file (tar/zip/gz) or directory of the target ChromeOS full file system extraction for parsing:')],
             [sg.Frame(layout=[
                     [sg.Input(size=(112,1)), sg.FolderBrowse(font=normal_font, button_text='Browse Folder')]
                 ], 
